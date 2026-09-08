@@ -1,0 +1,122 @@
+.shell {
+  width: 100%;
+  max-width: var(--shell-max);
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* --- ヘッダー --- */
+.site-head {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: var(--z-head);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: clamp(1rem, 0.6rem + 1vw, 1.75rem) var(--gutter);
+  mix-blend-mode: difference;
+  color: #fff;
+  transform: translateY(-110%);
+  transition: transform var(--dur-mid) var(--ease-out-expo);
+}
+
+.site-head.is-in { transform: translateY(0); }
+.site-head.is-hidden { transform: translateY(-110%); }
+
+.brand {
+  font-size: clamp(1rem, 0.85rem + 0.7vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: flex-start;
+}
+
+.brand__tick {
+  color: var(--accent);
+  margin-left: 0.06em;
+}
+
+.site-nav {
+  display: none;
+  gap: clamp(1rem, 2vw, 2.5rem);
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  letter-spacing: 0.14em;
+}
+
+.site-nav a { position: relative; padding-block: 0.25rem; }
+
+.site-nav a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform var(--dur-mid) var(--ease-out-expo);
+}
+
+.site-nav a:hover::after,
+.site-nav a:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+@media (min-width: 900px) {
+  .site-nav { display: flex; }
+}
+
+/* --- セクション共通 --- */
+.hero,
+.statement,
+.affil,
+.works,
+.profile,
+.contact { position: relative; }
+
+.statement { padding-block: var(--space-section); }
+
+.affil,
+.works,
+.profile,
+.contact,
+.strip,
+.site-foot {
+  background: var(--ink);
+  color: var(--on-ink);
+}
+
+.affil { padding-block: var(--space-section) clamp(3rem, 6vw, 7rem); }
+.works { padding-block: clamp(4rem, 8vw, 9rem); }
+.profile { padding-block: clamp(4rem, 8vw, 9rem); }
+.contact { padding-block: var(--space-section); }
+
+.affil .section-tag,
+.works .section-tag,
+.profile .section-tag,
+.contact .section-tag { color: var(--muted-on-ink); }
+
+/* --- フッター --- */
+.site-foot {
+  border-top: 1px solid var(--line-on-ink);
+  padding-block: clamp(1.5rem, 3vw, 2.5rem);
+}
+
+.site-foot__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem 2rem;
+  justify-content: space-between;
+  color: var(--muted-on-ink);
+}
+
+.to-top {
+  color: var(--on-ink);
+  transition: color var(--dur-fast) linear;
+}
+.to-top:hover { color: var(--accent); }
