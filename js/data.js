@@ -164,6 +164,19 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        title: "機体三面図を自動で3D再現するシミュレーター",
+        subtitle: "U.E.C.wings",
+        year: "Now",
+        category: "DEVELOPING",
+        role: "開発",
+        summary:
+          "2026年9月に発表されたばかりのAstraを利用して、鳥人間サークルの機体三面図を自動で3D化するシミュレーターを開発しました。AstraのAIが三面図からblenderで3Dモデルを自動生成し、それをhtmlを通してブラウザソフトで確認できるようになっています。現在はAIの精度を向上させて忠実に再現できるように挑戦しています。将来的には飛行シミュレーションや風洞実験のための基盤を整えます。",
+        tags: ["AI","Astra", "機体三面図", "飛行機", "3D化", "シミュレーター"],
+        image: "assets/images/astsim02.png",
+        links: [],
+      },
+      {
+        featured: true,
         title: "NEW PROJECT",
         subtitle: "Coming soon...",
         year: "NEXT",
