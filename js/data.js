@@ -120,11 +120,11 @@ const SITE_DATA = {
   works: {
     lede: "企画・開発・運営として関わったプロジェクトです。詳しい内容は各リンクから見られます。",
     items: [
-            {
+      {
         featured: false,
         title: "機体三面図を自動で3D再現するシミュレーター",
         subtitle: "U.E.C.wings",
-        year: "Now",
+        year: "2026.Sep - Now",
         category: "DEVELOPING",
         role: "開発",
         summary:
@@ -137,7 +137,7 @@ const SITE_DATA = {
         featured: false,
         title: "人力飛行機のフライトシミュレーター",
         subtitle: "U.E.C.wings",
-        year: "Now",
+        year: "2026.Sep - Now",
         category: "DEVELOPING",
         role: "開発",
         summary:
@@ -150,7 +150,7 @@ const SITE_DATA = {
         featured: false,
         title: "u&me list",
         subtitle: "学生団体 u&me",
-        year: "NOW",
+        year: "2026.May - Now",
         category: "SERVICE",
         role: "最高責任者",
         summary:
@@ -163,7 +163,7 @@ const SITE_DATA = {
         featured: false,
         title: "全国公フェンシング大会2026",
         subtitle: "UEC Fencers Club",
-        year: "2026",
+        year: "2026.Apr",
         category: "COMPETITION",
         role: "主将",
         summary:
@@ -176,7 +176,7 @@ const SITE_DATA = {
         featured: true,
         title: "鳥人間コンテスト2026",
         subtitle: "U.E.C.wings 26代",
-        year: "2026",
+        year: "2026.Jul",
         category: "Birdman Contest",
         role: "駆動班",
         summary:
