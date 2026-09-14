@@ -120,49 +120,7 @@ const SITE_DATA = {
   works: {
     lede: "企画・開発・運営として関わったプロジェクトです。詳しい内容は各リンクから見られます。",
     items: [
-      {
-        featured: true,
-        title: "鳥人間コンテスト2026",
-        subtitle: "U.E.C.wings 26代",
-        year: "2026",
-        category: "Birdman Contest",
-        role: "駆動班",
-        summary:
-          "私の故郷、滋賀県にある琵琶湖で毎年開催されている鳥人間コンテストで1km以上の飛行を目指して鳥人間サークルに携わりました。本戦の出場は叶いませんでしたが、テストフライトに成功したほか、現地で本戦の視察も行いました。",
-        tags: ["鳥人間コンテスト", "人力飛行機"],
-        image: "assets/images/wings.png",
-        links: [
-          { label: "公式ページ", href: "https://www.uecwings.club.uec.ac.jp/blog/", primary: true },
-          { label: "大会ページ", href: "https://www.ytv.co.jp/birdman/" },
-        ],
-      },
-      {
-        featured: false,
-        title: "u&me list",
-        subtitle: "学生団体 u&me",
-        year: "NOW",
-        category: "SERVICE",
-        role: "最高責任者",
-        summary:
-          "学生団体 u&me の事業「u&melist」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
-        tags: ["企画運営", "チーム管理"],
-        image: "assets/images/uandmelist.png",
-        links: [{ label: "詳しく見る", href: "", primary: true }],
-      },
-      {
-        featured: false,
-        title: "全国公フェンシング大会2026",
-        subtitle: "UEC Fencers Club",
-        year: "2026",
-        category: "COMPETITION",
-        role: "主将",
-        summary:
-          "東京大学駒場キャンパスで開催された全国公フェンシング大会に、UEC Fencers Club として男子フルーレ団体に出場しました。惜しくも今年の準優勝校山形大学に敗れ、ベスト16となりました。",
-        tags: ["フェンシング", "大会出場", "団体戦"],
-        image: "assets/images/fencing.png",
-        links: [],
-      },
-      {
+            {
         featured: false,
         title: "機体三面図を自動で3D再現するシミュレーター",
         subtitle: "U.E.C.wings",
@@ -190,17 +148,59 @@ const SITE_DATA = {
       },
       {
         featured: false,
-        title: "NEW PROJECT",
-        subtitle: "Coming soon...",
-        year: "NEXT",
+        title: "u&me list",
+        subtitle: "学生団体 u&me",
+        year: "NOW",
         category: "SERVICE",
-        role: "企画",
+        role: "最高責任者",
         summary:
-          "現在新しい事業を構想しています・",
-        tags: ["新事業"],
-        image: "",
+        "学生団体 u&me の事業「u&melist」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
+        tags: ["企画運営", "チーム管理"],
+        image: "assets/images/uandmelist.png",
+        links: [{ label: "詳しく見る", href: "", primary: true }],
+      },
+      {
+        featured: false,
+        title: "全国公フェンシング大会2026",
+        subtitle: "UEC Fencers Club",
+        year: "2026",
+        category: "COMPETITION",
+        role: "主将",
+        summary:
+          "東京大学駒場キャンパスで開催された全国公フェンシング大会に、UEC Fencers Club として男子フルーレ団体に出場しました。惜しくも今年の準優勝校山形大学に敗れ、ベスト16となりました。",
+        tags: ["フェンシング", "大会出場", "団体戦"],
+        image: "assets/images/fencing.png",
         links: [],
       },
+      {
+        featured: true,
+        title: "鳥人間コンテスト2026",
+        subtitle: "U.E.C.wings 26代",
+        year: "2026",
+        category: "Birdman Contest",
+        role: "駆動班",
+        summary:
+          "私の故郷、滋賀県にある琵琶湖で毎年開催されている鳥人間コンテストで1km以上の飛行を目指して鳥人間サークルに携わりました。本戦の出場は叶いませんでしたが、テストフライトに成功したほか、現地で本戦の視察も行いました。",
+        tags: ["鳥人間コンテスト", "人力飛行機"],
+        image: "assets/images/wings.png",
+        links: [
+          { label: "公式ページ", href: "https://www.uecwings.club.uec.ac.jp/blog/", primary: true },
+          { label: "大会ページ", href: "https://www.ytv.co.jp/birdman/" },
+        ],
+      },
+      // {
+      //   featured: false,
+      //   title: "NEW PROJECT",
+      //   subtitle: "Coming soon...",
+      //   year: "NEXT",
+      //   category: "SERVICE",
+      //   role: "企画",
+      //   summary:
+      //     "現在新しい事業を構想しています・",
+      //   tags: ["新事業"],
+      //   image: "",
+      //   links: [],
+      // },
     ],
   },
   profile: {
