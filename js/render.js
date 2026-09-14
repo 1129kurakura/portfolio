@@ -116,6 +116,116 @@ const R = (() => {
     });
   };
   /* ---------------- WORKS ---------------- */
+  const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
+  const NOW_PATTERN = /now|present|現在|継続/i;
+  const WORK_GROUP_DEFAULTS = {
+    current: { label: "NOW", ja: "現在取り組んでいること" },
+    past: { label: "ARCHIVE", ja: "これまでの活動" },
+  };
+  const pad = (n) => String(n).padStart(2, "0");
+  /** year の先頭の年月を「年×12＋月」にする。読めなければ Infinity（グループの末尾へ） */
+  const startKeyOf = (item) => {
+    const text = String(item.start || item.year || "");
+    const match = text.match(/(\d{4})(?:\s*[.\/\-年]\s*([A-Za-z]{3,}|\d{1,2}))?/);
+    if (!match) return Infinity;
+    const [, yearText, monthText = ""] = match;
+    const named = MONTHS.indexOf(monthText.slice(0, 3).toLowerCase());
+    const month = named >= 0 ? named + 1 : Number(monthText) || 0;
+    return Number(yearText) * 12 + month;
+  };
+  /** status があればそれに従い、無ければ year に "Now" / "現在" があるかで判定 */
+  const isCurrent = (item) =>
+    item.status ? item.status === "current" : NOW_PATTERN.test(String(item.year || ""));
+  /** 現在／過去に分け、それぞれ古い順に。同じ年月は data.js に書いた順 */
+  const groupWorks = (items) => {
+    const sorted = items
+      .map((item, order) => ({ item, order, key: startKeyOf(item) }))
+      .sort((a, b) => a.key - b.key || a.order - b.order)
+      .map(({ item }) => item);
+    return {
+      current: sorted.filter(isCurrent),
+      past: sorted.filter((item) => !isCurrent(item)),
+    };
+  };
+  /** 2列表示で右隣が空く項目は横幅いっぱいにして、グリッドに穴を作らない */
+  const wideLayoutOf = (items) => {
+    let column = 0;
+    return items.map((item, i) => {
+      const next = items[i + 1];
+      const isOrphan = column === 0 && !item.featured && (!next || next.featured);
+      const isWide = Boolean(item.featured) || isOrphan;
+      column = isWide ? 0 : (column + 1) % 2;
+      return isWide;
+    });
+  };
+  const workLinks = (item) => {
+    const links = (item.links || []).filter((l) => l && l.href && l.label);
+    if (!links.length) return null;
+    const wrap = el("div", "work__links");
+    links.forEach((l) => {
+      const a = el("a", l.primary ? "work__link is-primary" : "work__link");
+      a.href = l.href;
+      a.dataset.cursor = "link";
+      if (l.href.startsWith("http")) {
+        a.target = "_blank";
+        a.rel = "noopener noreferrer";
+      }
+      a.appendChild(el("span", null, l.label));
+      a.appendChild(el("i", "work__arrow", "↗"));
+      wrap.appendChild(a);
+    });
+    return wrap;
+  };
+  const workCard = (item, index, isWide) => {
+    const li = el("li", "work rise");
+    li.dataset.wide = String(isWide);
+    const figure = el("figure", "work__figure");
+    const media = el("div", "media work__media");
+    fillMedia(media, item.image, item.title, item.featured ? "16 / 9" : "4 / 3");
+    figure.appendChild(media);
+    li.appendChild(figure);
+    const head = el("div", "work__head");
+    head.appendChild(el("span", "mono-label", `( ${pad(index + 1)} )`));
+    const facts = [item.category, item.year].filter(Boolean).join(" — ");
+    head.appendChild(el("span", "mono-label", facts));
+    li.appendChild(head);
+    li.appendChild(el("h4", "work__title", item.title));
+    if (item.subtitle) li.appendChild(el("p", "work__sub", item.subtitle));
+    if (item.role) {
+      const role = el("p", "work__role");
+      role.appendChild(el("span", "mono-label", "ROLE / 担当"));
+      role.appendChild(el("span", "work__rolevalue", item.role));
+      li.appendChild(role);
+    }
+    if (item.summary) li.appendChild(el("p", "work__summary", item.summary));
+    if (item.tags && item.tags.length) {
+      const tags = el("div", "work__tags");
+      item.tags.forEach((t) => tags.appendChild(el("span", "tag", t)));
+      li.appendChild(tags);
+    }
+    const links = workLinks(item);
+    if (links) li.appendChild(links);
+    return li;
+  };
+  const workGroup = (key, labels, items) => {
+    const group = el("section", `works__group works__group--${key}`);
+    const headingId = `works-${key}`;
+    group.setAttribute("aria-labelledby", headingId);
+    const head = el("header", "works__grouphead");
+    const title = el("h3", "works__grouptitle");
+    title.id = headingId;
+    title.appendChild(el("span", "works__groupen", labels.label));
+    title.appendChild(el("span", "works__groupja", labels.ja));
+    head.appendChild(title);
+    const unit = items.length === 1 ? "PROJECT" : "PROJECTS";
+    head.appendChild(el("p", "mono-label works__groupcount", `${pad(items.length)} ${unit}`));
+    group.appendChild(head);
+    const list = el("ol", "works__grid");
+    const layout = wideLayoutOf(items);
+    items.forEach((item, i) => list.appendChild(workCard(item, i, layout[i])));
+    group.appendChild(list);
+    return group;
+  };
   const works = (d) => {
     if (!d.works) return;
     const items = d.works.items || [];
@@ -125,56 +235,13 @@ const R = (() => {
       return;
     }
     $("#worksLede").textContent = d.works.lede || "";
-    $("#worksCount").textContent =
-      `${String(items.length).padStart(2, "0")} PROJECTS`;
-    const grid = $("#worksGrid");
-    items.forEach((item, i) => {
-      const li = el("li", "work rise");
-      li.dataset.featured = String(!!item.featured);
-      const figure = el("figure", "work__figure");
-      const media = el("div", "media work__media");
-      fillMedia(media, item.image, item.title, item.featured ? "16 / 9" : "4 / 3");
-      figure.appendChild(media);
-      li.appendChild(figure);
-      const head = el("div", "work__head");
-      head.appendChild(
-        el("span", "mono-label", `( ${String(i + 1).padStart(2, "0")} )`)
-      );
-      const facts = [item.category, item.year].filter(Boolean).join(" — ");
-      head.appendChild(el("span", "mono-label", facts));
-      li.appendChild(head);
-      li.appendChild(el("h3", "work__title", item.title));
-      if (item.subtitle) li.appendChild(el("p", "work__sub", item.subtitle));
-      if (item.role) {
-        const role = el("p", "work__role");
-        role.appendChild(el("span", "mono-label", "ROLE / 担当"));
-        role.appendChild(el("span", "work__rolevalue", item.role));
-        li.appendChild(role);
-      }
-      if (item.summary) li.appendChild(el("p", "work__summary", item.summary));
-      if (item.tags && item.tags.length) {
-        const tags = el("div", "work__tags");
-        item.tags.forEach((t) => tags.appendChild(el("span", "tag", t)));
-        li.appendChild(tags);
-      }
-      const links = (item.links || []).filter((l) => l && l.href && l.label);
-      if (links.length) {
-        const wrap = el("div", "work__links");
-        links.forEach((l) => {
-          const a = el("a", l.primary ? "work__link is-primary" : "work__link");
-          a.href = l.href;
-          a.dataset.cursor = "link";
-          if (l.href.startsWith("http")) {
-            a.target = "_blank";
-            a.rel = "noopener noreferrer";
-          }
-          a.appendChild(el("span", null, l.label));
-          a.appendChild(el("i", "work__arrow", "↗"));
-          wrap.appendChild(a);
-        });
-        li.appendChild(wrap);
-      }
-      grid.appendChild(li);
+    $("#worksCount").textContent = `${pad(items.length)} PROJECTS`;
+    const groups = groupWorks(items);
+    const labels = { ...WORK_GROUP_DEFAULTS, ...(d.works.groups || {}) };
+    const wrap = $("#worksGroups");
+    ["current", "past"].forEach((key) => {
+      if (!groups[key].length) return;
+      wrap.appendChild(workGroup(key, labels[key], groups[key]));
     });
   };
   /* ---------------- PROFILE ---------------- */
