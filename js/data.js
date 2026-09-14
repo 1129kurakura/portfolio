@@ -184,7 +184,7 @@ const SITE_DATA = {
         links: [],
       },
       {
-        featured: true,
+        featured: false,
         title: "鳥人間コンテスト2026",
         subtitle: "U.E.C.wings 26代",
         year: "2026.Jul",
