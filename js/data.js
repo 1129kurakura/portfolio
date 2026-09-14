@@ -137,7 +137,7 @@ const SITE_DATA = {
         ],
       },
       {
-        featured: true,
+        featured: false,
         title: "u&me list",
         subtitle: "学生団体 u&me",
         year: "NOW",
@@ -189,7 +189,7 @@ const SITE_DATA = {
         links: [],
       },
       {
-        featured: true,
+        featured: false,
         title: "NEW PROJECT",
         subtitle: "Coming soon...",
         year: "NEXT",
