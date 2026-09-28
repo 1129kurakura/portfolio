@@ -132,6 +132,19 @@ const SITE_DATA = {
     },
     items: [
       {
+        featured: true,
+        title: "U.E.C.wingsのホームページのリニューアル",
+        subtitle: "U.E.C.wings",
+        year: "2026.Sep - Now",
+        category: "DEVELOPING",
+        role: "開発",
+        summary:
+          "鳥人間サークル U.E.C.wings の公式ホームページを代替りに合わせてリニューアルしました。メインページの背景には機体の3dモデルが離陸するアニメーションをスクロールに合わせて表示するなど、より動きのあるページにしました。",
+        tags: ["鳥人間", "ホームページ", "リニューアル", "webデザイン", "3Dモデル"],
+        image: "assets/images/wingshp.png",
+        links: [{ label: "実際に訪れる", href: "https://www.uecwings.club.uec.ac.jp/blog/new/", primary: true }],
+      },
+      {
         featured: false,
         title: "機体三面図を自動で3D再現するシミュレーター",
         subtitle: "U.E.C.wings",
@@ -140,7 +153,7 @@ const SITE_DATA = {
         role: "開発",
         summary:
           "設計時により具体的にイメージしやすくすることを目的に、生成AIを利用した、鳥人間サークルの機体三面図を自動で3D化するシミュレーターを開発しました。生成AIが三面図からblenderで3Dモデルを自動生成し、その3Dデータをブラウザソフトで確認してより完成形をイメージできるようにしました。現在はAIの精度を向上させて忠実に再現できるように挑戦しています。",
-        tags: ["AI", "機体三面図", "人力飛行機", "3D化", "シミュレーター"],
+        tags: ["鳥人間","AI", "機体三面図", "人力飛行機", "3D化", "シミュレーター"],
         image: "assets/images/astsim02.png",
         links: [],
       },
@@ -153,7 +166,7 @@ const SITE_DATA = {
         role: "開発",
         summary:
           "体験型の展示を主な目的に、前回のプロジェクトの、機体三面図を自動で3D化するシミュレーターで作成した機体の3Dデータを利用した、人力飛行機のフライトシミュレーターを開発しました。Unityで作成した3D空間で、実際の飛行機の挙動を再現し、飛行体験を疑似的に体験できるようにしました。今後は新歓やオープンキャンパス時の展示や初歩的な飛行シミュレーションの研究に活用する予定です。",
-        tags: ["AI","人力飛行機", "フライトシミュレーター"],
+        tags: ["鳥人間","AI","人力飛行機", "フライトシミュレーター"],
         image: "assets/images/daphnesim.png",
         links: [],
       },
