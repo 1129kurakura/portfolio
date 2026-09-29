@@ -139,7 +139,7 @@ const SITE_DATA = {
         category: "DEVELOPING",
         role: "開発",
         summary:
-          "鳥人間サークル U.E.C.wings の公式ホームページを代替りに合わせてリニューアルしました。メインページの背景には機体の3dモデルが離陸するアニメーションをスクロールに合わせて表示するなど、より動きのあるページにしました。",
+          "鳥人間サークル U.E.C.wings の公式ホームページを代替りに合わせてリニューアルしました。メインページの背景には機体の3dモデルが離陸するアニメーションをスクロールに合わせて表示するなど、より動きのあるページにしました。また、複数の脆弱性についても対応し、セキュリティ面でも改善しました。",
         tags: ["鳥人間", "ホームページ", "リニューアル", "webデザイン", "3Dモデル"],
         image: "assets/images/wingshp.png",
         links: [{ label: "実際に訪れる", href: "https://www.uecwings.club.uec.ac.jp/blog/new/", primary: true }],
