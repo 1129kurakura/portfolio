@@ -34,7 +34,7 @@
 .loader.is-armed .loader__word { clip-path: inset(0 0 0 0); }
 
 .loader__tick {
-  color: var(--accent);
+  color: var(--accent-text);
   opacity: 0;
   transition: opacity 400ms linear 900ms;
 }
@@ -173,7 +173,7 @@
   inset: 0;
   z-index: var(--z-menu);
   background: var(--ink);
-  color: var(--on-ink);
+  color: var(--on-surface);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -192,7 +192,7 @@
   align-items: baseline;
   gap: clamp(0.75rem, 2vw, 2rem);
   padding-block: clamp(0.35rem, 1.2vw, 0.85rem);
-  border-top: 1px solid var(--line-on-ink);
+  border-top: 1px solid var(--line);
   font-size: clamp(2rem, 1rem + 5vw, 5rem);
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -202,7 +202,7 @@
 
 .menu__link:hover,
 .menu__link:focus-visible {
-  color: var(--accent);
+  color: var(--accent-text);
   padding-left: clamp(0.5rem, 2vw, 2rem);
 }
 
@@ -210,7 +210,7 @@
   font-family: var(--font-mono);
   font-size: var(--text-mono);
   letter-spacing: 0.14em;
-  color: var(--muted-on-ink);
+  color: var(--muted);
 }
 
 .menu__foot {
@@ -218,8 +218,8 @@
   flex-wrap: wrap;
   gap: 1rem 3rem;
   align-items: baseline;
-  color: var(--muted-on-ink);
-  border-top: 1px solid var(--line-on-ink);
+  color: var(--muted);
+  border-top: 1px solid var(--line);
   padding-top: 1.25rem;
 }
 
@@ -234,10 +234,10 @@
   font-size: var(--text-mono);
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--on-ink);
+  color: var(--on-surface);
   transition: color var(--dur-fast) linear;
 }
-.menu__socials a:hover { color: var(--accent); }
+.menu__socials a:hover { color: var(--accent-text); }
 
 /* ---------- 流れる帯（ティッカー） ---------- */
 .ticker {
@@ -246,7 +246,7 @@
   bottom: 0;
   width: 100%;
   overflow: hidden;
-  border-top: 1px solid var(--line-on-paper);
+  border-top: 1px solid var(--line);
   padding-block: 0.7rem;
 }
 
@@ -270,7 +270,7 @@
 .ticker__track span::after {
   content: "◆";
   margin-left: 1.4rem;
-  color: var(--accent);
+  color: var(--accent-text);
 }
 
 @keyframes slide {
@@ -322,9 +322,10 @@
   font-size: var(--text-mono);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  border: 1px solid var(--line-on-ink);
+  border: 1px solid var(--line);
   border-radius: 999px;
   padding: 0.28em 0.85em;
+  color: var(--muted);
   white-space: nowrap;
 }
 
@@ -334,7 +335,7 @@
   font-size: var(--text-mono);
   letter-spacing: 0.14em;
   background: var(--accent);
-  color: var(--paper);
+  color: var(--ink);
   padding: 0.25em 0.7em;
   vertical-align: middle;
 }
@@ -372,5 +373,5 @@
 .btn:hover,
 .btn:focus-visible {
   color: var(--paper);
-  border-color: var(--accent);
+  border-color: var(--accent-text);
 }

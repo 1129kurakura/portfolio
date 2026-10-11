@@ -34,7 +34,7 @@
 }
 
 .brand__tick {
-  color: var(--accent);
+  color: var(--accent-text);
   margin-left: 0.06em;
 }
 
@@ -81,29 +81,23 @@
 
 .statement { padding-block: var(--space-section); }
 
-.affil,
-.works,
-.profile,
-.contact,
-.strip,
-.site-foot {
-  background: var(--ink);
-  color: var(--on-ink);
+/* 面の指定はセクションのクラス（surface-paper / surface-ink）で行う */
+.surface-paper,
+.surface-ink {
+  background: var(--surface);
+  color: var(--on-surface);
 }
 
-.affil { padding-block: var(--space-section) clamp(3rem, 6vw, 7rem); }
-.works { padding-block: clamp(4rem, 8vw, 9rem); }
-.profile { padding-block: clamp(4rem, 8vw, 9rem); }
+.affil { padding-block: var(--space-section) clamp(2.5rem, 5vw, 5rem); }
+.works { padding-block: clamp(3.5rem, 6vw, 7rem); }
+.profile { padding-block: clamp(3.5rem, 6vw, 7rem); }
 .contact { padding-block: var(--space-section); }
 
-.affil .section-tag,
-.works .section-tag,
-.profile .section-tag,
-.contact .section-tag { color: var(--muted-on-ink); }
+
 
 /* --- フッター --- */
 .site-foot {
-  border-top: 1px solid var(--line-on-ink);
+  border-top: 1px solid var(--line);
   padding-block: clamp(1.5rem, 3vw, 2.5rem);
 }
 
@@ -112,11 +106,11 @@
   flex-wrap: wrap;
   gap: 0.75rem 2rem;
   justify-content: space-between;
-  color: var(--muted-on-ink);
+  color: var(--muted);
 }
 
 .to-top {
-  color: var(--on-ink);
+  color: var(--on-surface);
   transition: color var(--dur-fast) linear;
 }
-.to-top:hover { color: var(--accent); }
+.to-top:hover { color: var(--accent-text); }

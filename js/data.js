@@ -261,13 +261,6 @@ const SITE_DATA = {
       "国立大学法人 電気通信大学 情報理工学域 Ⅱ類（融合系）に在籍。情報と工学の境界にある領域を学びながら、学内では複数の団体で運営に携わっています。",
       "鳥人間サークル U.E.C.wings では28代代表 兼 駆動班班長、学生団体 u&me と UEC Fencers Club では代表を務めています。加えて ICES での国際交流イベントの企画運営、アメリカンフットボール部 CRUSHERS でのデータ分析にも取り組んでいます。",
     ],
-    spec: [
-      { label: "所属", value: "電気通信大学 情報理工学域 Ⅱ類（融合系）" },
-      { label: "役職", value: "U.E.C.wings 28代代表 / 駆動班班長" },
-      { label: "役職", value: "学生団体 u&me 代表" },
-      { label: "役職", value: "UEC Fencers Club 代表" },
-      { label: "活動", value: "ICES / Crushers アナライジングスタッフ" },
-    ],
     focus: {
       title: "FOCUS",
       items: [

@@ -77,7 +77,7 @@
 
 <main id="top">
   <!-- ============ HERO ============ -->
-  <section class="hero" aria-labelledby="hero-heading">
+  <section class="hero surface-paper" aria-labelledby="hero-heading">
     <div class="shell hero__inner">
       <p class="mono-label hero__eyebrow rise" id="heroEyebrow"></p>
       <h1 class="hero__title" id="hero-heading" data-split="words"></h1>
@@ -94,7 +94,7 @@
   </section>
 
   <!-- ============ STATEMENT ============ -->
-  <section class="statement" id="statement" aria-labelledby="statement-heading">
+  <section class="statement surface-paper" id="statement" aria-labelledby="statement-heading">
     <div class="shell">
       <p class="mono-label section-tag">( 01 ) &nbsp;STATEMENT</p>
       <h2 class="statement__text" id="statement-heading" data-split="words"></h2>
@@ -103,7 +103,7 @@
   </section>
 
   <!-- ============ AFFILIATIONS ============ -->
-  <section class="affil" id="affiliations" aria-labelledby="affil-heading">
+  <section class="affil surface-paper" id="affiliations" aria-labelledby="affil-heading">
     <div class="shell">
       <div class="affil__head">
         <h2 class="section-title" id="affil-heading">AFFILIATIONS<br /><span>&amp; ROLES</span></h2>
@@ -113,19 +113,19 @@
         </div>
       </div>
 
-      <!-- 一覧表：所属と役職をひと目で -->
-      <div class="glance" aria-label="所属と役職の一覧">
-        <div class="glance__head mono-label"><span>ORGANIZATION / 所属</span><span>ROLE / 役職・学域</span></div>
-        <ul class="glance__list" id="glanceList"></ul>
+      <!-- 所属・役職・種別を 1 つの表にまとめる -->
+      <div class="affil__tablehead mono-label" aria-hidden="true">
+        <span>No.</span>
+        <span>ORGANIZATION / 所属</span>
+        <span>ROLE / 役職</span>
+        <span>TYPE / 種別</span>
       </div>
-
-      <!-- 詳細リスト -->
       <ol class="affil__list" id="affilList"></ol>
     </div>
   </section>
 
   <!-- ============ WORKS ============ -->
-  <section class="works" id="works" aria-labelledby="works-heading">
+  <section class="works surface-ink" id="works" aria-labelledby="works-heading">
     <div class="shell">
       <div class="works__head">
         <h2 class="section-title" id="works-heading">WORKS<br /><span>&amp; PROJECTS</span></h2>
@@ -139,7 +139,7 @@
   </section>
 
   <!-- ============ PROFILE ============ -->
-  <section class="profile" id="profile" aria-labelledby="profile-heading">
+  <section class="profile surface-paper" id="profile" aria-labelledby="profile-heading">
     <div class="shell profile__grid">
       <figure class="profile__media">
         <div class="media" data-media="portrait" id="portrait"></div>
@@ -149,7 +149,6 @@
         <p class="mono-label section-tag">( 04 ) &nbsp;PROFILE</p>
         <h2 class="section-title section-title--sm" id="profile-heading"></h2>
         <div class="profile__text" id="profileText"></div>
-        <dl class="spec" id="profileSpec"></dl>
       </div>
     </div>
     <div class="shell">
@@ -158,13 +157,13 @@
   </section>
 
   <!-- ============ GLITCH MARQUEE ============ -->
-  <section class="strip" aria-hidden="true">
+  <section class="strip surface-ink" aria-hidden="true">
     <div class="strip__row"><div class="strip__track" id="stripA"></div></div>
     <div class="strip__row strip__row--rev"><div class="strip__track" id="stripB"></div></div>
   </section>
 
   <!-- ============ CONTACT ============ -->
-  <section class="contact" id="contact" aria-labelledby="contact-heading">
+  <section class="contact surface-ink" id="contact" aria-labelledby="contact-heading">
     <div class="shell">
       <p class="mono-label section-tag">( 05 ) &nbsp;CONTACT</p>
       <h2 class="contact__title" id="contact-heading" data-split="words"></h2>
@@ -174,7 +173,7 @@
   </section>
 </main>
 
-<footer class="site-foot">
+<footer class="site-foot surface-ink">
   <div class="shell site-foot__inner">
     <p class="mono-label" id="footCopy"></p>
     <p class="mono-label" id="footNote"></p>

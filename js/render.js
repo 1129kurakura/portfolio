@@ -57,63 +57,51 @@ const R = (() => {
     $("#statementJa").textContent = d.statement.ja;
   };
   /* ---------------- AFFILIATIONS ---------------- */
+  /** 1 団体 = 1 行。所属・役職・種別をこの 1 か所にだけ書く */
+  const affilRow = (item, i) => {
+    const li = el("li", "affil__row rise");
+    li.dataset.image = item.image || "";
+    li.appendChild(el("p", "affil__no mono-label", pad(i + 1)));
+    const org = el("div", "affil__orgcell");
+    org.appendChild(el("h3", "affil__orgname", item.org));
+    if (item.orgEn) org.appendChild(el("p", "affil__orgen mono-label", item.orgEn));
+    li.appendChild(org);
+    const role = el("div", "affil__rolecell");
+    if (item.roleLabel) role.appendChild(el("p", "affil__rolelabel mono-label", item.roleLabel));
+    const top = el("div", "affil__roletop");
+    top.appendChild(el("p", "affil__rolename", item.role));
+    if (item.lead) top.appendChild(el("span", "badge", "代表 / LEAD"));
+    role.appendChild(top);
+    if (item.roleEn) role.appendChild(el("p", "affil__roleen mono-label", item.roleEn));
+    if (item.summary) role.appendChild(el("p", "affil__summary", item.summary));
+    if (item.tags && item.tags.length) {
+      const tags = el("div", "affil__tags");
+      item.tags.forEach((t) => tags.appendChild(el("span", "tag", t)));
+      role.appendChild(tags);
+    }
+    li.appendChild(role);
+    const meta = el("div", "affil__metacell");
+    if (item.kind) meta.appendChild(el("p", "mono-label", item.kind));
+    if (item.period) meta.appendChild(el("p", "mono-label", item.period));
+    if (item.link) {
+      const a = el("a", "affil__link mono-label");
+      a.href = item.link;
+      a.target = "_blank";
+      a.rel = "noopener noreferrer";
+      a.dataset.cursor = "link";
+      a.appendChild(el("span", null, "VISIT"));
+      a.appendChild(el("i", "work__arrow", "↗"));
+      meta.appendChild(a);
+    }
+    li.appendChild(meta);
+    return li;
+  };
   const affiliations = (d) => {
-    const items = d.affiliations.items;
-    $("#affilLede").textContent = d.affiliations.lede;
-    $("#affilCount").textContent =
-      `${String(items.length).padStart(2, "0")} ORGANIZATIONS`;
-    /* 一覧表 */
-    const glance = $("#glanceList");
-    items.forEach((item) => {
-      const li = el("li", "glance__item");
-      li.dataset.lead = String(!!item.lead);
-
-      const org = el("div", "glance__org", item.org);
-      org.appendChild(el("small", null, item.orgEn || item.kind));
-      const role = el("div", "glance__role");
-      role.appendChild(el("span", null, item.role));
-      if (item.lead) role.appendChild(el("span", "badge", "代表 / LEAD"));
-      li.append(org, role);
-      glance.appendChild(li);
-    });
-    /* 詳細リスト */
+    const items = (d.affiliations && d.affiliations.items) || [];
+    $("#affilLede").textContent = (d.affiliations && d.affiliations.lede) || "";
+    $("#affilCount").textContent = `${pad(items.length)} ORGANIZATIONS`;
     const list = $("#affilList");
-    items.forEach((item, i) => {
-      const li = el("li", "affil__row rise");
-      li.dataset.image = item.image || "";
-      li.dataset.label = item.org;
-      li.appendChild(el("p", "affil__no", String(i + 1).padStart(2, "0")));
-      const head = el("div");
-      const org = el("h3", "affil__org", item.org);
-      head.appendChild(org);
-      head.appendChild(el("p", "affil__orgja", `${item.kind}${item.period ? " — " + item.period : ""}`));
-      li.appendChild(head);
-      const body = el("div");
-      const roleline = el("div", "affil__roleline");
-      roleline.appendChild(
-        el("span", "affil__rolelabel", item.roleLabel || "ROLE / 役職")
-      );
-      if (item.lead) roleline.appendChild(el("span", "badge", "代表 / LEAD"));
-      body.appendChild(roleline);
-      body.appendChild(el("p", "affil__role", item.role));
-      if (item.roleEn) body.appendChild(el("p", "affil__roleen", item.roleEn));
-      if (item.summary) body.appendChild(el("p", "affil__summary", item.summary));
-      if (item.tags && item.tags.length) {
-        const tags = el("div", "affil__tags");
-        item.tags.forEach((t) => tags.appendChild(el("span", "tag", t)));
-        body.appendChild(tags);
-      }
-      if (item.link) {
-        const a = el("a", "affil__link", "VISIT SITE ↗");
-        a.href = item.link;
-        a.target = "_blank";
-        a.rel = "noopener noreferrer";
-        a.dataset.cursor = "link";
-        body.appendChild(a);
-      }
-      li.appendChild(body);
-      list.appendChild(li);
-    });
+    items.forEach((item, i) => list.appendChild(affilRow(item, i)));
   };
   /* ---------------- WORKS ---------------- */
   const MONTHS = ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"];
@@ -147,17 +135,6 @@ const R = (() => {
       past: sorted.filter((item) => !isCurrent(item)),
     };
   };
-  /** 2列表示で右隣が空く項目は横幅いっぱいにして、グリッドに穴を作らない */
-  const wideLayoutOf = (items) => {
-    let column = 0;
-    return items.map((item, i) => {
-      const next = items[i + 1];
-      const isOrphan = column === 0 && !item.featured && (!next || next.featured);
-      const isWide = Boolean(item.featured) || isOrphan;
-      column = isWide ? 0 : (column + 1) % 2;
-      return isWide;
-    });
-  };
   const workLinks = (item) => {
     const links = (item.links || []).filter((l) => l && l.href && l.label);
     if (!links.length) return null;
@@ -176,35 +153,37 @@ const R = (() => {
     });
     return wrap;
   };
-  const workCard = (item, index, isWide) => {
+  const workCard = (item, index) => {
     const li = el("li", "work rise");
-    li.dataset.wide = String(isWide);
+    li.dataset.featured = String(Boolean(item.featured));
     const figure = el("figure", "work__figure");
     const media = el("div", "media work__media");
-    fillMedia(media, item.image, item.title, item.featured ? "16 / 9" : "4 / 3");
+    fillMedia(media, item.image, item.title); // 比率は CSS 側で決める
     figure.appendChild(media);
     li.appendChild(figure);
+    const body = el("div", "work__body");
     const head = el("div", "work__head");
     head.appendChild(el("span", "mono-label", `( ${pad(index + 1)} )`));
     const facts = [item.category, item.year].filter(Boolean).join(" — ");
     head.appendChild(el("span", "mono-label", facts));
-    li.appendChild(head);
-    li.appendChild(el("h4", "work__title", item.title));
-    if (item.subtitle) li.appendChild(el("p", "work__sub", item.subtitle));
+    body.appendChild(head);
+    body.appendChild(el("h4", "work__title", item.title));
+    if (item.subtitle) body.appendChild(el("p", "work__sub", item.subtitle));
     if (item.role) {
       const role = el("p", "work__role");
       role.appendChild(el("span", "mono-label", "ROLE / 担当"));
       role.appendChild(el("span", "work__rolevalue", item.role));
-      li.appendChild(role);
+      body.appendChild(role);
     }
-    if (item.summary) li.appendChild(el("p", "work__summary", item.summary));
+    if (item.summary) body.appendChild(el("p", "work__summary", item.summary));
     if (item.tags && item.tags.length) {
       const tags = el("div", "work__tags");
       item.tags.forEach((t) => tags.appendChild(el("span", "tag", t)));
-      li.appendChild(tags);
+      body.appendChild(tags);
     }
     const links = workLinks(item);
-    if (links) li.appendChild(links);
+    if (links) body.appendChild(links);
+    li.appendChild(body);
     return li;
   };
   const workGroup = (key, labels, items) => {
@@ -221,8 +200,7 @@ const R = (() => {
     head.appendChild(el("p", "mono-label works__groupcount", `${pad(items.length)} ${unit}`));
     group.appendChild(head);
     const list = el("ol", "works__grid");
-    const layout = wideLayoutOf(items);
-    items.forEach((item, i) => list.appendChild(workCard(item, i, layout[i])));
+    items.forEach((item, i) => list.appendChild(workCard(item, i)));
     group.appendChild(list);
     return group;
   };
@@ -252,13 +230,6 @@ const R = (() => {
     fillMedia($("#portrait"), p.portrait, d.meta.nameJa, "4 / 5");
     const text = $("#profileText");
     p.paragraphs.forEach((para) => text.appendChild(el("p", "rise", para)));
-    const spec = $("#profileSpec");
-    p.spec.forEach((row) => {
-      const wrap = el("div", "spec__row");
-      wrap.appendChild(el("dt", null, row.label));
-      wrap.appendChild(el("dd", null, row.value));
-      spec.appendChild(wrap);
-    });
     const focus = $("#focusBlock");
     focus.appendChild(el("p", "mono-label focus__title", p.focus.title));
     const grid = el("div", "focus__grid");

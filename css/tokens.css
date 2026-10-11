@@ -5,13 +5,18 @@
   --ink: #0a0a0a;
   --ink-2: #131313;
   --accent: #ff3d14;
+  /* 明るい面で小さな文字に使うと薄い朱色は読みにくいため、文字用は濃いめにする */
+  --accent-text: #c92f0d;
 
-  --on-paper: var(--ink);
-  --on-ink: var(--paper);
-  --line-on-paper: rgba(10, 10, 10, 0.14);
-  --line-on-ink: rgba(241, 239, 234, 0.16);
-  --muted-on-paper: rgba(10, 10, 10, 0.5);
-  --muted-on-ink: rgba(241, 239, 234, 0.5);
+  /* 面ごとの意味トークン。:root は明るい面（既定値）。
+     暗い面にしたいセクションには .surface-ink を付けると、
+     下の .surface-ink で同じトークンが暗い面用に差し替わります。 */
+  --surface: var(--paper);
+  --on-surface: var(--ink);
+  --surface-raise: #e7e4de;
+  --line: rgba(10, 10, 10, 0.14);
+  --muted: rgba(10, 10, 10, 0.66);
+  --soft: rgba(10, 10, 10, 0.82);
 
   /* --- 書体 --- */
   --font-display: "Inter Tight", "Meiryo UI", "Meiryo", "Hiragino Sans",
@@ -27,12 +32,12 @@
   --text-lede: clamp(1.05rem, 0.95rem + 0.55vw, 1.45rem);
   --text-section: clamp(2.6rem, 1.2rem + 6.4vw, 8rem);
   --text-hero: clamp(3rem, 0.4rem + 11.4vw, 12.5rem);
-  --text-row: clamp(1.9rem, 0.8rem + 4.6vw, 5.5rem);
+  --text-row: clamp(1.45rem, 1.1rem + 1.3vw, 2.3rem);
   --text-strip: clamp(4rem, 1rem + 14vw, 16rem);
 
   /* --- 余白 --- */
   --gutter: clamp(1.15rem, 0.6rem + 2.6vw, 3.5rem);
-  --space-section: clamp(6rem, 4rem + 9vw, 15rem);
+  --space-section: clamp(4rem, 3rem + 4.5vw, 8.5rem);
   --space-block: clamp(2.5rem, 1.8rem + 3vw, 5.5rem);
   --shell-max: 1680px;
 
@@ -51,4 +56,16 @@
   --z-hover-media: 50;
 
   --radius: 2px;
+}
+
+/* 暗い面：トークンだけを差し替える（部品側の CSS は共通のまま） */
+.surface-ink,
+.menu {
+  --surface: var(--ink);
+  --on-surface: var(--paper);
+  --surface-raise: var(--ink-2);
+  --line: rgba(241, 239, 234, 0.16);
+  --muted: rgba(241, 239, 234, 0.52);
+  --soft: rgba(241, 239, 234, 0.74);
+  --accent-text: var(--accent);
 }
