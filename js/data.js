@@ -132,6 +132,32 @@ const SITE_DATA = {
     },
     items: [
       {
+        featured: true,
+        title: "ふらっと",
+        subtitle: "学生団体 u&me",
+        year: "2026.Sep - Now",
+        category: "SERVICE",
+        role: "最高責任者",
+        summary:
+        "「あなたのおでかけの壁を ふらっと に。」学生団体 u&me の事業「ふらっと」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
+        tags: ["企画運営", "チーム管理"],
+        image: "assets/images/flat.png",
+        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/furatto-mvp/", primary: true }],
+      },
+      {
+        featured: false,
+        title: "都市3dマップ",
+        subtitle: "未来のマップをつくるプロジェクト",
+        year: "2026.Sep - Now",
+        category: "SERVICE",
+        role: "最高責任者",
+        summary:
+        "PLATEAUを利用した都市の3Dマップを作るプロジェクトの企画・開発・運営を個人で行なっています。",
+        tags: ["個人開発","3Dマップ","PLATEAU"],
+        image: "assets/images/3d.png",
+        links: [{ label: "詳しく見る", href: "", primary: true }],
+      },
+      {
         featured: false,
         title: "U.E.C.wingsのホームページのリニューアル",
         subtitle: "U.E.C.wings",
@@ -158,7 +184,7 @@ const SITE_DATA = {
         links: [],
       },
       {
-        featured: true,
+        featured: false,
         title: "u&me list",
         subtitle: "学生団体 u&me",
         year: "2026.May - Now",
