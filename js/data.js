@@ -132,7 +132,7 @@ const SITE_DATA = {
     },
     items: [
       {
-        featured: true,
+        featured: false,
         title: "U.E.C.wingsのホームページのリニューアル",
         subtitle: "U.E.C.wings",
         year: "2026.Sep - Now",
@@ -143,19 +143,6 @@ const SITE_DATA = {
         tags: ["鳥人間", "ホームページ", "リニューアル", "webデザイン", "3Dモデル"],
         image: "assets/images/wingshp.png",
         links: [{ label: "実際に訪れる", href: "https://www.uecwings.club.uec.ac.jp/blog/new/", primary: true }],
-      },
-      {
-        featured: false,
-        title: "機体三面図を自動で3D再現するシミュレーター",
-        subtitle: "U.E.C.wings",
-        year: "2026.Sep - Now",
-        category: "DEVELOPING",
-        role: "開発",
-        summary:
-          "設計時により具体的にイメージしやすくすることを目的に、生成AIを利用した、鳥人間サークルの機体三面図を自動で3D化するシミュレーターを開発しました。生成AIが三面図からblenderで3Dモデルを自動生成し、その3Dデータをブラウザソフトで確認してより完成形をイメージできるようにしました。現在はAIの精度を向上させて忠実に再現できるように挑戦しています。",
-        tags: ["鳥人間","AI", "機体三面図", "人力飛行機", "3D化", "シミュレーター"],
-        image: "assets/images/astsim02.png",
-        links: [],
       },
       {
         featured: false,
@@ -171,7 +158,7 @@ const SITE_DATA = {
         links: [],
       },
       {
-        featured: false,
+        featured: true,
         title: "u&me list",
         subtitle: "学生団体 u&me",
         year: "2026.May - Now",
@@ -211,6 +198,19 @@ const SITE_DATA = {
           { label: "公式ページ", href: "https://www.uecwings.club.uec.ac.jp/blog/", primary: true },
           { label: "大会ページ", href: "https://www.ytv.co.jp/birdman/" },
         ],
+      },
+      {
+        featured: false,
+        title: "機体三面図を自動で3D再現するシミュレーター",
+        subtitle: "U.E.C.wings",
+        year: "2026.Sep",
+        category: "DEVELOPING",
+        role: "開発",
+        summary:
+          "設計時により具体的にイメージしやすくすることを目的に、生成AIを利用した、鳥人間サークルの機体三面図を自動で3D化するシミュレーターを開発しました。生成AIが三面図からblenderで3Dモデルを自動生成し、その3Dデータをブラウザソフトで確認してより完成形をイメージできるようにしました。現在はAIの精度を向上させて忠実に再現できるように挑戦しています。",
+        tags: ["鳥人間","AI", "機体三面図", "人力飛行機", "3D化", "シミュレーター"],
+        image: "assets/images/astsim02.png",
+        links: [],
       },
       // {
       //   featured: false,
