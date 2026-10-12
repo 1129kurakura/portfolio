@@ -212,7 +212,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
-        title: "u&me list",
+        title: "ゆめリス",
         subtitle: "学生団体 u&me",
         year: "2026.May - Now",
         category: "SERVICE",
