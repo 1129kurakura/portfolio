@@ -86,7 +86,7 @@ button {
 .section-title span { color: var(--accent-text); }
 
 /* 固定ヘッダーの下に見出しが潜らないようにする */
-section[id] { scroll-margin-top: clamp(4.5rem, 9vh, 6.5rem); }
+section[id] { scroll-margin-top: calc(var(--head-h) + 0.75rem); }
 
 .section-title--sm {
   font-size: clamp(1.9rem, 1rem + 3vw, 3.6rem);

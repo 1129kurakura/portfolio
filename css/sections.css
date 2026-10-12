@@ -285,11 +285,13 @@
 
 .works__grouphead {
   display: flex;
+  /* 画面の上端に貼り付き、ヘッダーの高さぶんの余白を自分の背景で埋める。
+     こうしないと、透明なヘッダーの裏をカードの文字が流れて見えてしまう。 */
   position: sticky;
-  top: clamp(3.25rem, 7vh, 4.5rem);
+  top: 0;
   z-index: 2;
   background: var(--surface);
-  padding-top: 0.75rem;
+  padding-top: var(--head-h);
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;

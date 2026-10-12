@@ -39,6 +39,8 @@
   --gutter: clamp(1.15rem, 0.6rem + 2.6vw, 3.5rem);
   --space-section: clamp(4rem, 3rem + 4.5vw, 8.5rem);
   /* 明るい面と暗い面をつなぐグラデーション帯の高さ */
+  /* 固定ヘッダーのおおよその高さ。固定見出しとアンカー位置で使う */
+  --head-h: clamp(3.5rem, 2.5rem + 2vw, 5rem);
   --seam-h: clamp(150px, 18vh + 6vw, 420px);
   --space-block: clamp(2.5rem, 1.8rem + 3vw, 5.5rem);
   --shell-max: 1680px;
