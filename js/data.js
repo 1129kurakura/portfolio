@@ -156,7 +156,7 @@ const SITE_DATA = {
         "「あなたのおでかけの壁を ふらっと に。」学生団体 u&me の事業「ふらっと」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
         tags: ["企画運営", "チーム管理"],
         image: "assets/images/flat.png",
-        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/furatto-mvp/", primary: true }],
+        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/uandme/products/furatto.html", primary: true }],
       },
       {
         featured: true,
@@ -182,7 +182,7 @@ const SITE_DATA = {
         "学生団体 u&me の事業として、PLATEAUを利用した都市の3Dマップを作るプロジェクトを企画・開発・運営しています。現在はまだ開発段階です。",
         tags: ["個人開発","3Dマップ","PLATEAU"],
         image: "assets/images/3d.png",
-        links: [{ label: "詳しく見る", href: "", primary: true }],
+        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/uandme/products/city3d.html", primary: true }],
       },
       {
         featured: false,
@@ -221,7 +221,7 @@ const SITE_DATA = {
         "学生団体 u&me の事業「u&melist」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
         tags: ["企画運営", "チーム管理"],
         image: "assets/images/uandmelist.png",
-        links: [{ label: "詳しく見る", href: "", primary: true }],
+        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/uandme/products/yumelist.html", primary: true }],
       },
       {
         featured: false,
