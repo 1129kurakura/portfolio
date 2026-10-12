@@ -173,16 +173,16 @@ const SITE_DATA = {
       },
       {
         featured: true,
-        title: "SAKIMORI",
+        title: "SAKIMO",
         subtitle: "kindchord",
         year: "2026.Sep - Now",
         category: "SERVICE",
         role: "PDM",
         summary:
-          "「あなたの大切な人を、見守る。」kindchord の事業「SAKIMORI」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
+          "「あなたの大切な人を、見守る。」kindchord の事業「SAKIMO」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
         tags: ["企画運営", "チーム管理"],
         image: "assets/images/sakimori.png",
-        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/sakimori-mvp/demo/", primary: true }],
+        links: [{ label: "詳しく見る", href: "", primary: true }],
       },
       {
         featured: false,

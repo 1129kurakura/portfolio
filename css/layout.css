@@ -22,6 +22,28 @@
 }
 
 .site-head.is-in { transform: translateY(0); }
+
+/* ヘッダーの裏に敷く、ぼかしの帯。背後の色をそのまま使うので
+   白い面でも黒い面でも馴染む。下端はマスクで消して境目を作らない。 */
+.head-scrim {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: calc(var(--head-h) + 0.75rem);
+  z-index: calc(var(--z-head) - 1);
+  pointer-events: none;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  -webkit-mask-image: linear-gradient(to bottom, #000 58%, transparent);
+  mask-image: linear-gradient(to bottom, #000 58%, transparent);
+  transform: translateY(-110%);
+  transition: transform var(--dur-mid) var(--ease-out-expo);
+}
+
+.site-head.is-in + .head-scrim { transform: translateY(0); }
+.site-head.is-hidden + .head-scrim { transform: translateY(-110%); }
+
+/* メニューを開いている間は不要 */
+body.is-locked .head-scrim { opacity: 0; }
 .site-head.is-hidden { transform: translateY(-110%); }
 
 .brand {

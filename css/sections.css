@@ -299,6 +299,18 @@
   margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
 }
 
+/* 固定見出しの下端。カードの文字がすっと消えながら潜るようにする */
+.works__grouphead::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 1.4rem;
+  pointer-events: none;
+  background: linear-gradient(to bottom, var(--surface), transparent);
+}
+
 .works__grouptitle {
   display: flex;
   flex-wrap: wrap;
