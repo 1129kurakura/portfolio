@@ -185,6 +185,9 @@
 .affil__row.is-hot::before { transform: scaleX(1); }
 .affil__row.is-hot { padding-left: clamp(0.4rem, 1vw, 1rem); }
 
+/* 最後の行の罫線は、下に続くグラデーションの境目に見えるので消す */
+.affil__row:last-child { border-bottom: 0; }
+
 .affil__no { color: var(--muted); padding-top: 0.3em; }
 
 .affil__orgname {
@@ -256,7 +259,7 @@
 .affil__link:hover { gap: 0.6rem; }
 
 /* ---------------- WORKS ---------------- */
-.works { border-top: 1px solid var(--line); }
+
 
 .works__head {
   display: grid;
@@ -282,6 +285,11 @@
 
 .works__grouphead {
   display: flex;
+  position: sticky;
+  top: clamp(3.25rem, 7vh, 4.5rem);
+  z-index: 2;
+  background: var(--surface);
+  padding-top: 0.75rem;
   flex-wrap: wrap;
   align-items: baseline;
   justify-content: space-between;
@@ -360,8 +368,19 @@
 
 .work__body { display: flex; flex-direction: column; }
 
-.media img { transition: transform 900ms var(--ease-out-expo); }
-.work:hover .media img { transform: scale(1.04); }
+/* 画像はスクロールに合わせてゆっくり上下に動く。
+   1.1 倍にしておくことで、動かしても枠に隙間ができない。 */
+.media img { transform: translate3d(0, var(--py, 0px), 0) scale(1.1); }
+
+/* 画面に入ったら下から拭うように現れる */
+.js .work__media,
+.js .profile__media .media {
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 1000ms var(--ease-out-expo) var(--d, 0ms);
+}
+
+.work.is-revealed .work__media,
+.profile__media.is-revealed .media { clip-path: inset(0 0 0 0); }
 
 .work__head {
   display: flex;
@@ -500,7 +519,7 @@
 }
 
 /* ---------------- PROFILE ---------------- */
-.profile { border-top: 1px solid var(--line); }
+
 
 .profile__grid {
   display: grid;
@@ -578,7 +597,6 @@
 .strip {
   padding-block: clamp(3rem, 7vw, 6rem);
   overflow: hidden;
-  border-top: 1px solid var(--line);
 }
 
 .strip__row { overflow: hidden; }

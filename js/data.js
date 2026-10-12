@@ -147,12 +147,12 @@ const SITE_DATA = {
       {
         featured: false,
         title: "都市3dマップ",
-        subtitle: "未来のマップをつくるプロジェクト",
+        subtitle: "学生団体 u&me",
         year: "2026.Sep - Now",
         category: "SERVICE",
         role: "最高責任者",
         summary:
-        "PLATEAUを利用した都市の3Dマップを作るプロジェクトの企画・開発・運営を個人で行なっています。",
+        "学生団体 u&me の事業として、PLATEAUを利用した都市の3Dマップを作るプロジェクトを企画・開発・運営しています。現在はまだ開発段階です。",
         tags: ["個人開発","3Dマップ","PLATEAU"],
         image: "assets/images/3d.png",
         links: [{ label: "詳しく見る", href: "", primary: true }],

@@ -65,6 +65,23 @@
   transition: width 160ms linear;
 }
 
+/* ---------- スクロール進捗バー ---------- */
+.progress {
+  position: fixed;
+  inset: 0 0 auto 0;
+  height: 2px;
+  z-index: var(--z-head);
+  pointer-events: none;
+}
+
+.progress i {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+  transform: scaleX(var(--p, 0));
+  transform-origin: left center;
+}
+
 /* ---------- カスタムカーソル ---------- */
 .cursor {
   position: fixed;

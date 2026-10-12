@@ -108,7 +108,7 @@ section[id] { scroll-margin-top: clamp(4.5rem, 9vh, 6.5rem); }
   padding-bottom: 0.06em;
 }
 
-.word > i {
+.js .word > i {
   display: inline-block;
   font-style: inherit;
   transform: translateY(105%);
@@ -118,7 +118,7 @@ section[id] { scroll-margin-top: clamp(4.5rem, 9vh, 6.5rem); }
 
 .is-revealed .word > i { transform: translateY(0); }
 
-.rise {
+.js .rise {
   opacity: 0;
   transform: translateY(28px);
   transition: opacity var(--dur-slow) var(--ease-out-expo),
@@ -131,6 +131,16 @@ section[id] { scroll-margin-top: clamp(4.5rem, 9vh, 6.5rem); }
   opacity: 1;
   transform: none;
 }
+
+/* 大見出しは下から拭うように出す */
+.js .section-title.rise {
+  opacity: 1;
+  transform: none;
+  clip-path: inset(0 0 110% 0);
+  transition: clip-path 1100ms var(--ease-out-expo) var(--d, 0ms);
+}
+
+.section-title.rise.is-revealed { clip-path: inset(0 0 -15% 0); }
 
 /* --- JS 無効時 --- */
 .noscript {
@@ -151,4 +161,9 @@ section[id] { scroll-margin-top: clamp(4.5rem, 9vh, 6.5rem); }
   }
   .word > i { transform: none; }
   .rise { opacity: 1; transform: none; }
+  /* 動きを減らす設定では、切り抜きや視差を使わず最初から全部見せる */
+  .section-title.rise,
+  .work__media,
+  .profile__media .media { clip-path: none !important; }
+  .media img { transform: none !important; }
 }

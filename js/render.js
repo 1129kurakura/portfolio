@@ -18,6 +18,7 @@ const R = (() => {
       img.alt = label || "";
       img.loading = "lazy";
       img.decoding = "async";
+      img.dataset.parallax = ""; // スクロール視差の対象にする
       node.dataset.empty = "false";
       node.appendChild(img);
       return;
@@ -60,6 +61,7 @@ const R = (() => {
   /** 1 団体 = 1 行。所属・役職・種別をこの 1 か所にだけ書く */
   const affilRow = (item, i) => {
     const li = el("li", "affil__row rise");
+    li.style.setProperty("--d", `${Math.min(i, 6) * 70}ms`);
     li.dataset.image = item.image || "";
     li.appendChild(el("p", "affil__no mono-label", pad(i + 1)));
     const org = el("div", "affil__orgcell");
@@ -155,6 +157,7 @@ const R = (() => {
   };
   const workCard = (item, index) => {
     const li = el("li", "work rise");
+    li.style.setProperty("--d", `${Math.min(index, 3) * 90}ms`);
     li.dataset.featured = String(Boolean(item.featured));
     const figure = el("figure", "work__figure");
     const media = el("div", "media work__media");

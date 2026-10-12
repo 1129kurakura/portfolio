@@ -32,6 +32,10 @@
 <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 
+<!-- JS が動く環境でだけ「出現前は隠す」スタイルを有効にする。
+     JS が失敗しても文字や画像が消えないようにするための保険。 -->
+<script>document.documentElement.classList.add("js");</script>
+
 <link rel="stylesheet" href="css/tokens.css" />
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/layout.css" />
@@ -48,6 +52,7 @@
 </div>
 
 <!-- ============ CURSOR ============ -->
+<div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
 <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
 <div class="hover-media" id="hoverMedia" aria-hidden="true"></div>
 
@@ -106,7 +111,7 @@
   <section class="affil surface-paper" id="affiliations" aria-labelledby="affil-heading">
     <div class="shell">
       <div class="affil__head">
-        <h2 class="section-title" id="affil-heading">AFFILIATIONS<br /><span>&amp; ROLES</span></h2>
+        <h2 class="section-title rise" id="affil-heading">AFFILIATIONS<br /><span>&amp; ROLES</span></h2>
         <div class="affil__intro">
           <p class="mono-label section-tag">( 02 ) &nbsp;<span id="affilCount"></span></p>
           <p class="lede" id="affilLede"></p>
@@ -125,10 +130,10 @@
   </section>
 
   <!-- ============ WORKS ============ -->
-  <section class="works surface-ink" id="works" aria-labelledby="works-heading">
+  <section class="works surface-ink" data-seam="from-paper" id="works" aria-labelledby="works-heading">
     <div class="shell">
       <div class="works__head">
-        <h2 class="section-title" id="works-heading">WORKS<br /><span>&amp; PROJECTS</span></h2>
+        <h2 class="section-title rise" id="works-heading">WORKS<br /><span>&amp; PROJECTS</span></h2>
         <div class="works__intro">
           <p class="mono-label section-tag">( 03 ) &nbsp;<span id="worksCount"></span></p>
           <p class="lede" id="worksLede"></p>
@@ -139,9 +144,9 @@
   </section>
 
   <!-- ============ PROFILE ============ -->
-  <section class="profile surface-paper" id="profile" aria-labelledby="profile-heading">
+  <section class="profile surface-paper" data-seam="from-ink" id="profile" aria-labelledby="profile-heading">
     <div class="shell profile__grid">
-      <figure class="profile__media">
+      <figure class="profile__media rise">
         <div class="media" data-media="portrait" id="portrait"></div>
         <figcaption class="mono-label" id="portraitCaption"></figcaption>
       </figure>
@@ -157,7 +162,7 @@
   </section>
 
   <!-- ============ GLITCH MARQUEE ============ -->
-  <section class="strip surface-ink" aria-hidden="true">
+  <section class="strip surface-ink" data-seam="from-paper" aria-hidden="true">
     <div class="strip__row"><div class="strip__track" id="stripA"></div></div>
     <div class="strip__row strip__row--rev"><div class="strip__track" id="stripB"></div></div>
   </section>

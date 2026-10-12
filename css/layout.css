@@ -77,9 +77,61 @@
 .affil,
 .works,
 .profile,
-.contact { position: relative; }
+.contact,
+.strip { position: relative; }
 
 .statement { padding-block: var(--space-section); }
+
+/* 面が切り替わる境目は、グラデーションの帯でつないで段差を消す。
+   帯の色は --paper(#f1efea) と --ink(#0a0a0a) の中間色を手で並べたもの。
+   帯の高さぶん上に余白を足して、文字が帯の上に乗らないようにしている。 */
+section[data-seam] { padding-top: calc(var(--seam-h) + var(--space-block) * 0.75); }
+
+[data-seam]::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--seam-h);
+  pointer-events: none;
+}
+
+/* 帯の上にごく薄い粒子を重ねる。8bit の色段差（バンディング）を散らし、
+   粒子自体の切れ目が見えないよう上下はマスクで消している。 */
+[data-seam]::after {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: var(--seam-h);
+  pointer-events: none;
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,<svg%20xmlns='http://www.w3.org/2000/svg'%20width='180'%20height='180'><filter%20id='n'><feTurbulence%20type='fractalNoise'%20baseFrequency='0.9'%20numOctaves='4'%20stitchTiles='stitch'/></filter><rect%20width='180'%20height='180'%20filter='url%28%2523n%29'/></svg>");
+  background-size: 180px 180px;
+  -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+  mask-image: linear-gradient(to bottom, transparent, #000 22%, #000 78%, transparent);
+}
+
+[data-seam="from-paper"]::before {
+  background: linear-gradient(
+    to bottom,
+    #f1efea 0%, #eceae6 8%, #e0ded9 17%,
+    #cdcbc7 25%, #b5b4b0 33%, #9a9996 42%,
+    #7e7c7a 50%, #61605e 58%, #464544 67%,
+    #2e2e2d 75%, #1b1b1b 83%, #0f0f0e 92%,
+    #0a0a0a 100%
+  );
+}
+
+[data-seam="from-ink"]::before {
+  background: linear-gradient(
+    to bottom,
+    #0a0a0a 0%, #0f0f0e 8%, #1b1b1b 17%,
+    #2e2e2d 25%, #464544 33%, #61605e 42%,
+    #7e7c7a 50%, #9a9996 58%, #b5b4b0 67%,
+    #cdcbc7 75%, #e0ded9 83%, #eceae6 92%,
+    #f1efea 100%
+  );
+}
 
 /* 面の指定はセクションのクラス（surface-paper / surface-ink）で行う */
 .surface-paper,
