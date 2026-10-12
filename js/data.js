@@ -71,7 +71,7 @@ const SITE_DATA = {
           "学生団体 u&me の代表。u&melistを代表するプロジェクトの企画の立ち上げから運営までを主導しています。また、様々なコンペにも参加しています。",
         tags: ["代表", "学生団体", "事業企画運営", "コンペ"],
         image: "",
-        link: "",
+        link: "https://1129kurakura.github.io/uandme/",
       },
       {
         org: "UEC Fencers Club",
@@ -143,6 +143,19 @@ const SITE_DATA = {
         tags: ["企画運営", "チーム管理"],
         image: "assets/images/flat.png",
         links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/furatto-mvp/", primary: true }],
+      },
+      {
+        featured: true,
+        title: "SAKIMORI",
+        subtitle: "kindchord",
+        year: "2026.Sep - Now",
+        category: "SERVICE",
+        role: "PDM",
+        summary:
+          "「あなたの大切な人を、見守る。」kindchord の事業「SAKIMORI」の企画・開発・運営を統括しています。現在は実証段階に向けて準備中です。",
+        tags: ["企画運営", "チーム管理"],
+        image: "assets/images/sakimori.png",
+        links: [{ label: "詳しく見る", href: "https://1129kurakura.github.io/sakimori-mvp/demo/", primary: true }],
       },
       {
         featured: false,
