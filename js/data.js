@@ -85,7 +85,7 @@ const SITE_DATA = {
           "フェンシング同好会の代表。初代立ち上げの創設メンバーとして、大会に出場しながら2027年の学友会公認を目標に取り組んでいます。",
         tags: ["代表", "フェンシング", "サークル運営", "全国公ベスト16"],
         image: "",
-        link: "https://www.instagram.com/uec_fencers/",
+        link: "https://1129kurakura.github.io/uecfencers/",
       },
       {
         org: "ICES",
