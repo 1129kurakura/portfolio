@@ -88,6 +88,20 @@ const SITE_DATA = {
         link: "https://1129kurakura.github.io/uecfencers/",
       },
       {
+        org: "kindchord",
+        orgEn: "kindchord",
+        role: "PDM",
+        roleEn: "Member",
+        kind: "学生団体 / STUDENT ORG",
+        period: "現在",
+        lead: false,
+        summary:
+          " kindchord に所属。",
+        tags: ["見守りサービス"],
+        image: "",
+        link: "",
+      },
+      {
         org: "ICES",
         orgEn: "International Cultural Exchange Society",
         role: "企画運営",
