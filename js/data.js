@@ -282,7 +282,7 @@ const SITE_DATA = {
   },
   profile: {
     heading: "志賀 蔵之介 —\nKuranosuke Shiga",
-    portrait: "assets/images/profile.png",
+    portrait: "assets/images/profile2.jpg",
     portraitCaption: "PORTRAIT / 2026",
     paragraphs: [
       "国立大学法人 電気通信大学 情報理工学域 Ⅱ類（融合系）に在籍。情報と工学の境界にある領域を学びながら、学内では複数の団体で運営に携わっています。",
