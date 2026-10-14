@@ -230,7 +230,15 @@ const R = (() => {
     const p = d.profile;
     $("#profile-heading").textContent = p.heading;
     $("#portraitCaption").textContent = p.portraitCaption;
-    fillMedia($("#portrait"), p.portrait, d.meta.nameJa, "4 / 5");
+    const portrait = $("#portrait");
+    fillMedia(portrait, p.portrait, d.meta.nameJa);
+    const portraitImg = portrait.querySelector("img");
+    if (portraitImg) {
+      // 顔の位置に合わせて切り取り基準を指定する
+      portraitImg.style.objectPosition = p.portraitPosition || "center top";
+      // 視差の拡大で頭が切れるのを防ぐため、人物写真は視差の対象から外す
+      portraitImg.removeAttribute("data-parallax");
+    }
     const text = $("#profileText");
     p.paragraphs.forEach((para) => text.appendChild(el("p", "rise", para)));
     const focus = $("#focusBlock");

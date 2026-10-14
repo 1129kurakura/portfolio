@@ -551,7 +551,14 @@
   color: var(--muted);
 }
 
-.profile__media .media { max-height: 72vh; }
+/* 人物写真は縦長なので、枠も縦長にして切り取りを最小限にする。
+   拡大すると頭が切れるため、視差の拡大もここでは無効にする。 */
+.profile__media .media {
+  --ratio: 3 / 4;
+  max-height: 72vh;
+}
+
+.profile__media .media img { transform: none; }
 
 .profile__text {
   font-family: var(--font-ja);
