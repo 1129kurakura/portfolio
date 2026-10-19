@@ -1,3 +1,10 @@
+/* ============================================================
+   ui.js — ローダー / カーソル / メニュー / ホバー
+
+   本文はモードごとに作り直されるため、
+   描画のたびに必要なものは U.bindDynamic() でつなぎ直します。
+   ============================================================ */
+
 const U = (() => {
   const $ = (sel) => document.querySelector(sel);
   const coarse = window.matchMedia("(hover: none), (pointer: coarse)").matches;
@@ -36,7 +43,9 @@ const U = (() => {
       if (t >= 1) window.setTimeout(finish, M.reduced ? 0 : 260);
     };
 
+    // setInterval を使うことで、非表示タブでも確実に完了する
     const timer = window.setInterval(step, 40);
+    // 保険：どんな場合でも一定時間後には必ず解除する
     window.setTimeout(finish, DURATION + 1200);
 
     document.body.classList.add("is-locked");
@@ -74,45 +83,19 @@ const U = (() => {
     };
     requestAnimationFrame(loop);
 
-    const setLink = (on) => node.classList.toggle("is-link", on);
     document.addEventListener("mouseover", (e) => {
-      const hit = e.target.closest('a, button, [data-cursor="link"]');
-      setLink(Boolean(hit));
+      const hit = e.target.closest('a, button, summary, [data-cursor="link"]');
+      node.classList.toggle("is-link", Boolean(hit));
     });
   };
 
-  /* ---------------- 所属リストのホバー演出 ---------------- */
-  const affilHover = () => {
-    const rows = [...document.querySelectorAll(".affil__row")];
-    const media = $("#hoverMedia");
-    if (!rows.length) return;
-
-    const place = (e) => {
-      if (!media) return;
-      media.style.transform =
-        `translate(${e.clientX}px, ${e.clientY}px) translate(-50%, -50%) scale(1)`;
-    };
-
-    rows.forEach((row) => {
-      row.addEventListener("mouseenter", () => {
-        row.classList.add("is-hot");
-        if (!media || coarse) return;
-        const src = row.dataset.image;
-        if (!src) return;
-        media.innerHTML = "";
-        const img = document.createElement("img");
-        img.src = src;
-        img.alt = "";
-        media.appendChild(img);
-        media.classList.add("is-visible");
-      });
-
-      row.addEventListener("mouseleave", () => {
-        row.classList.remove("is-hot");
-        if (media) media.classList.remove("is-visible");
-      });
-
-      row.addEventListener("mousemove", place, { passive: true });
+  /* ---------------- 本文の中のホバー ---------------- */
+  const bindDynamic = () => {
+    document.querySelectorAll(".actlist__row").forEach((row) => {
+      if (row.dataset.bound === "true") return;
+      row.dataset.bound = "true";
+      row.addEventListener("mouseenter", () => row.classList.add("is-hot"));
+      row.addEventListener("mouseleave", () => row.classList.remove("is-hot"));
     });
   };
 
@@ -134,7 +117,7 @@ const U = (() => {
       if (open) {
         panel.hidden = false;
         requestAnimationFrame(() => panel.classList.add("is-open"));
-        const first = panel.querySelector("a");
+        const first = panel.querySelector('[aria-selected="true"], a');
         if (first) first.focus({ preventScroll: true });
         return;
       }
@@ -147,8 +130,9 @@ const U = (() => {
 
     btn.addEventListener("click", () => setState(!open));
 
+    // リンクでもモード切り替えでも、押したらメニューを閉じる
     panel.addEventListener("click", (e) => {
-      if (e.target.closest("a")) setState(false);
+      if (e.target.closest("a, .switch__btn")) setState(false);
     });
 
     document.addEventListener("keydown", (e) => {
@@ -159,13 +143,34 @@ const U = (() => {
     });
   };
 
-  /* ---------------- 起動 ---------------- */
+  /* ---------------- モードによらず変わらない部分 ---------------- */
+  const buildStatic = () => {
+    const brand = SITE_DATA.meta.brand;
+    document.querySelectorAll(".brand__word, .loader__word").forEach((n) => {
+      n.textContent = brand;
+    });
+
+    const socials = $("#menuSocials");
+    if (socials) {
+      socials.innerHTML = "";
+      SITE_DATA.contact.socials.forEach((s) => {
+        const a = P.anchor(s.href, "");
+        a.textContent = s.label;
+        socials.appendChild(a);
+      });
+    }
+
+    const copy = $("#footCopy");
+    const note = $("#footNote");
+    if (copy) copy.textContent = SITE_DATA.footer.copy;
+    if (note) note.textContent = SITE_DATA.footer.note;
+  };
+
   const init = (onLoaderDone) => {
     loader(onLoaderDone);
     cursor();
-    affilHover();
     menu();
   };
 
-  return { init };
+  return { init, buildStatic, bindDynamic };
 })();

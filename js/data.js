@@ -31,6 +31,7 @@ const SITE_DATA = {
     lede: "現在所属している組織と、そこで担っている役職です。代表・班長として運営に関わるものから、スタッフとして支えるものまで。",
     items: [
       {
+        id: "uec",
         org: "電気通信大学",
         orgEn: "The University of Electro-Communications",
         roleLabel: "学域(学部)生 / 2026年4月入学",
@@ -46,6 +47,7 @@ const SITE_DATA = {
         link: "https://www.uec.ac.jp/",
       },
       {
+        id: "wings",
         org: "U.E.C.wings",
         orgEn: "Birdman Club",
         role: "28代 代表 兼 駆動班 班長",
@@ -54,12 +56,13 @@ const SITE_DATA = {
         period: "28代",
         lead: true,
         summary:
-          "電気通信大学の鳥人間サークル U.E.C.wings の28代代表。駆動部の設計/作成の他に、公式サイトの編集もしています。",
+          "電気通信大学の鳥人間サークル U.E.C.wings の28代代表。駆動部の設計/作成の他に、公式サイトの編集・管理もしています。",
         tags: ["代表", "班長", "マネジメント", "鳥人間コンテスト", "人力飛行機", "設計"],
         image: "",
         link: "https://www.uecwings.club.uec.ac.jp/blog/",
       },
       {
+        id: "uandme",
         org: "u&me",
         orgEn: "Student Organization u&me",
         role: "代表",
@@ -74,6 +77,7 @@ const SITE_DATA = {
         link: "https://1129kurakura.github.io/uandme/",
       },
       {
+        id: "fencers",
         org: "UEC Fencers Club",
         orgEn: "UEC Fencers Club",
         role: "代表",
@@ -88,6 +92,7 @@ const SITE_DATA = {
         link: "https://1129kurakura.github.io/uecfencers/",
       },
       {
+        id: "kindchord",
         org: "kindchord",
         orgEn: "kindchord",
         role: "PDM",
@@ -102,6 +107,7 @@ const SITE_DATA = {
         link: "",
       },
       {
+        id: "ices",
         org: "ICES",
         orgEn: "International Cultural Exchange Society",
         role: "企画運営",
@@ -116,6 +122,7 @@ const SITE_DATA = {
         link: "https://www.instagram.com/uec.ices/",
       },
       {
+        id: "crushers",
         org: "CRUSHERS",
         orgEn: "UEC American Football Club",
         role: "アナライジング スタッフ",
@@ -147,6 +154,7 @@ const SITE_DATA = {
     items: [
       {
         featured: true,
+        id: "furatto",
         title: "ふらっと",
         subtitle: "学生団体 u&me",
         year: "2026.Sep - Now",
@@ -160,6 +168,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "city3d",
         title: "都市3dマップ",
         subtitle: "学生団体 u&me",
         year: "2026.Sep - Now",
@@ -173,6 +182,7 @@ const SITE_DATA = {
       },
       {
         featured: true,
+        id: "sakimo",
         title: "SAKIMO",
         subtitle: "kindchord",
         year: "2026.Sep - Now",
@@ -186,6 +196,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "wings-hp",
         title: "U.E.C.wingsのホームページのリニューアル",
         subtitle: "U.E.C.wings",
         year: "2026.Sep - Now",
@@ -199,6 +210,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "flight-sim",
         title: "人力飛行機のフライトシミュレーター",
         subtitle: "U.E.C.wings",
         year: "2026.Sep - Now",
@@ -212,6 +224,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "yumelist",
         title: "ゆめリス",
         subtitle: "学生団体 u&me",
         year: "2026.May - Now",
@@ -225,11 +238,12 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "fencing-2026",
         title: "全国公フェンシング大会2026",
         subtitle: "UEC Fencers Club",
-        year: "2026.Apr",
+        year: "2026.Aug",
         category: "COMPETITION",
-        role: "主将",
+        role: "代表",
         summary:
           "東京大学駒場キャンパスで開催された全国公フェンシング大会に、UEC Fencers Club として男子フルーレ団体に出場しました。惜しくも今年の準優勝校山形大学に敗れ、ベスト16となりました。",
         tags: ["フェンシング", "大会出場", "団体戦"],
@@ -238,6 +252,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "birdman-2026",
         title: "鳥人間コンテスト2026",
         subtitle: "U.E.C.wings 26代",
         year: "2026.Jul",
@@ -254,6 +269,7 @@ const SITE_DATA = {
       },
       {
         featured: false,
+        id: "tri-view-3d",
         title: "機体三面図を自動で3D再現するシミュレーター",
         subtitle: "U.E.C.wings",
         year: "2026.Sep",

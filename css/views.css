@@ -1,0 +1,463 @@
+/* ============================================================
+   views.css — 各セクションの中身
+
+   どのモードでも同じ部品を使い回します。
+   面の色（白 / 黒）はトークンで切り替わるので、
+   ここでは色を直接書かず var(--surface) 等を使います。
+   ============================================================ */
+
+/* ---------------- ABOUT：プロフィール ---------------- */
+.intro {
+  display: grid;
+  gap: clamp(1.75rem, 4vw, 4rem);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .intro { grid-template-columns: minmax(0, 0.72fr) minmax(0, 1fr); }
+  .intro__media { position: sticky; top: calc(var(--head-h) + 2rem); }
+}
+
+.intro__media { margin: 0; }
+.intro__media .media { --ratio: 3 / 4; max-height: 70vh; }
+.intro__media .media img { transform: none; }
+.intro__media figcaption { margin-top: 0.8rem; color: var(--muted); }
+
+.intro__name {
+  font-size: clamp(1.6rem, 1.1rem + 1.8vw, 2.6rem);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  white-space: pre-line;
+  margin-bottom: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+.intro__text p {
+  font-family: var(--font-ja);
+  line-height: 1.95;
+  color: var(--soft);
+  max-width: 54ch;
+}
+
+.intro__text p + p { margin-top: 1.25rem; }
+
+/* ---------------- 団体の一覧 ---------------- */
+.actlist { border-top: 1px solid var(--line); }
+
+.actlist__row {
+  position: relative;
+  display: grid;
+  gap: 0.4rem clamp(1rem, 2.2vw, 2.5rem);
+  padding-block: clamp(1.15rem, 2.2vw, 1.75rem);
+  border-bottom: 1px solid var(--line);
+  align-items: start;
+  transition: padding-left var(--dur-mid) var(--ease-out-expo);
+}
+
+@media (min-width: 900px) {
+  .actlist__row { grid-template-columns: 2.5rem minmax(0, 1fr) 11rem; }
+}
+
+.actlist__row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  width: 100%;
+  height: 1px;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-mid) var(--ease-out-expo);
+}
+
+.actlist__row.is-hot::before { transform: scaleX(1); }
+.actlist__row.is-hot { padding-left: clamp(0.4rem, 1vw, 1rem); }
+
+.actlist__no { color: var(--muted); padding-top: 0.35em; }
+
+.actlist__namerow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.actlist__org {
+  font-size: clamp(1.25rem, 1.05rem + 0.8vw, 1.9rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  transition: color var(--dur-fast) linear;
+}
+
+.actlist__row.is-hot .actlist__org { color: var(--accent-text); }
+
+.actlist__role {
+  font-family: var(--font-ja);
+  font-weight: 700;
+  font-size: clamp(0.98rem, 0.92rem + 0.3vw, 1.15rem);
+  margin-top: 0.45rem;
+}
+
+.actlist__note {
+  font-family: var(--font-ja);
+  color: var(--soft);
+  line-height: 1.85;
+  margin-top: 0.5rem;
+  max-width: 56ch;
+  font-size: clamp(0.85rem, 0.82rem + 0.15vw, 0.94rem);
+}
+
+.actlist__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  color: var(--muted);
+}
+
+/* ---------------- INTERESTS ---------------- */
+.interests {
+  display: grid;
+  gap: clamp(1.75rem, 3.5vw, 3rem);
+}
+
+@media (min-width: 760px) {
+  .interests { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.interests__group {
+  border-top: 2px solid var(--on-surface);
+  padding-top: 1rem;
+}
+
+.interests__grouptitle {
+  font-family: var(--font-ja);
+  font-size: clamp(1.05rem, 0.95rem + 0.4vw, 1.3rem);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.interests__item {
+  padding-block: 0.8rem;
+  border-top: 1px solid var(--line);
+}
+
+.interests__item b {
+  display: block;
+  font-family: var(--font-ja);
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.interests__item span {
+  display: block;
+  font-family: var(--font-ja);
+  font-size: 0.84rem;
+  line-height: 1.7;
+  color: var(--muted);
+  margin-top: 0.3rem;
+}
+
+/* ---------------- プロジェクトのカード ---------------- */
+.pgrid {
+  display: grid;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.pcard { display: flex; flex-direction: column; }
+
+.pcard__figure {
+  margin: 0 0 clamp(1rem, 2vw, 1.5rem);
+  overflow: hidden;
+}
+
+.pcard__media { --ratio: 16 / 10; max-height: 56vh; }
+
+.pcard__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 0.55rem;
+  margin-bottom: 0.8rem;
+}
+
+.pcard__title {
+  font-size: clamp(1.4rem, 1.05rem + 1.5vw, 2.2rem);
+  font-weight: 600;
+  line-height: 1.08;
+  letter-spacing: -0.04em;
+  transition: color var(--dur-fast) linear;
+}
+
+.pcard:hover .pcard__title { color: var(--accent-text); }
+
+.pcard__stage {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-mono);
+  letter-spacing: 0.12em;
+  border: 1px solid var(--accent-text);
+  color: var(--accent-text);
+  border-radius: 999px;
+  padding: 0.3em 0.85em;
+  margin-top: 0.8rem;
+}
+
+.pcard__text {
+  font-family: var(--font-ja);
+  color: var(--soft);
+  line-height: 1.85;
+  margin-top: 0.75rem;
+  max-width: 52ch;
+  font-size: clamp(0.85rem, 0.82rem + 0.15vw, 0.94rem);
+}
+
+.pcard__wanted { margin-top: 1rem; }
+.pcard__wanted .mono-label { color: var(--muted); margin-bottom: 0.5rem; }
+.pcard .taglist { margin-top: 0.9rem; }
+.pcard .linklist { margin-top: auto; padding-top: clamp(1rem, 2vw, 1.5rem); }
+
+/* 横組み：画像とテキストを左右に並べ、1 枚が 1 画面に収まるようにする */
+@media (min-width: 900px) {
+  .pcard {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    column-gap: clamp(2rem, 4vw, 4rem);
+    align-items: start;
+  }
+
+  .pcard__figure { grid-column: 1; grid-row: 1; margin-bottom: 0; }
+  .pcard__body { grid-column: 2; grid-row: 1; display: flex; flex-direction: column; }
+
+  /* 偶数番目は画像を右に置いて、上下でリズムをつける */
+  .pcard:nth-child(even) .pcard__figure { grid-column: 2; }
+  .pcard:nth-child(even) .pcard__body { grid-column: 1; }
+}
+
+/* ---------------- JOURNEY ---------------- */
+.timeline { border-top: 1px solid var(--line); }
+
+.timeline__item {
+  display: grid;
+  gap: 0.3rem 1.5rem;
+  padding-block: clamp(1rem, 2vw, 1.4rem);
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+
+@media (min-width: 700px) {
+  .timeline__item { grid-template-columns: 6rem minmax(0, 1fr); }
+}
+
+.timeline__when { color: var(--accent-text); }
+
+.timeline__title {
+  font-family: var(--font-ja);
+  font-size: clamp(1rem, 0.94rem + 0.3vw, 1.2rem);
+  font-weight: 700;
+}
+
+.timeline__note {
+  font-family: var(--font-ja);
+  color: var(--soft);
+  font-size: 0.88rem;
+  line-height: 1.8;
+  margin-top: 0.3rem;
+  max-width: 60ch;
+}
+
+/* ---------------- 「名前＋補足」の並び ---------------- */
+.notegrid {
+  display: grid;
+  gap: 1px;
+  background: var(--line);
+  border: 1px solid var(--line);
+}
+
+@media (min-width: 700px) { .notegrid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1100px) { .notegrid { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 1100px) { .notegrid--2 { grid-template-columns: repeat(2, 1fr); } }
+
+.notecard {
+  background: var(--surface);
+  padding: clamp(1.25rem, 2.5vw, 2rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  transition: background var(--dur-mid) var(--ease-out-expo);
+}
+
+.notecard:hover { background: var(--surface-raise); }
+
+.notecard__name {
+  font-family: var(--font-ja);
+  font-size: clamp(1rem, 0.95rem + 0.35vw, 1.2rem);
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.notecard__note,
+.notecard__where {
+  font-family: var(--font-ja);
+  font-size: 0.86rem;
+  line-height: 1.8;
+  color: var(--soft);
+}
+
+.notecard__where { color: var(--muted); }
+
+/* ---------------- 完了した活動の一覧 ---------------- */
+.minilist { border-top: 1px solid var(--line); }
+
+.minilist__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem 2rem;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-block: clamp(1rem, 2vw, 1.4rem);
+  border-bottom: 1px solid var(--line);
+}
+
+.minilist__title {
+  font-family: var(--font-ja);
+  font-size: clamp(1.02rem, 0.96rem + 0.3vw, 1.22rem);
+  font-weight: 700;
+}
+
+.minilist__note {
+  font-family: var(--font-ja);
+  color: var(--soft);
+  font-size: 0.86rem;
+  line-height: 1.8;
+  margin-top: 0.35rem;
+  max-width: 62ch;
+}
+
+.minilist__when { color: var(--muted); }
+
+/* ---------------- CAREER：ケーススタディ ---------------- */
+.caselist { display: grid; gap: clamp(2rem, 4vw, 3.5rem); }
+
+.case {
+  border-top: 2px solid var(--on-surface);
+  padding-top: clamp(1.25rem, 2.5vw, 2rem);
+}
+
+/* 企業向けは本文が主役なので、図版は小さく添える程度にする */
+.case__figure { margin: 0 0 1.25rem; overflow: hidden; }
+.case__media { --ratio: 16 / 10; }
+
+@media (min-width: 900px) {
+  .case {
+    display: grid;
+    grid-template-columns: minmax(0, 0.55fr) minmax(0, 1fr);
+    column-gap: clamp(1.5rem, 3vw, 3rem);
+    align-items: start;
+  }
+
+  .case__figure { grid-column: 1; grid-row: 1 / span 20; margin-bottom: 0; }
+  .case > :not(.case__figure) { grid-column: 2; }
+  /* 図版が無い項目は、本文を左端から始める */
+  .case:not(:has(.case__figure)) { display: block; }
+}
+
+.case__head .mono-label { color: var(--muted); }
+
+.case__title {
+  font-size: clamp(1.4rem, 1.1rem + 1.2vw, 2.1rem);
+  font-weight: 600;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  margin-top: 0.5rem;
+}
+
+.case__overview {
+  font-family: var(--font-ja);
+  line-height: 1.9;
+  color: var(--soft);
+  margin-top: 0.85rem;
+  max-width: 64ch;
+}
+
+.case__stack { margin-top: 1.1rem; }
+.case__stack .mono-label { color: var(--muted); margin-bottom: 0.5rem; }
+.case .linklist { margin-top: 1.25rem; }
+
+/* ---------------- CAREER：技術 ---------------- */
+.skillgroup + .skillgroup { margin-top: clamp(2rem, 4vw, 3rem); }
+
+.skillgroup__name {
+  font-family: var(--font-ja);
+  font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+  font-weight: 700;
+  padding-bottom: 0.6rem;
+  border-bottom: 2px solid var(--on-surface);
+}
+
+.skillgroup__note {
+  font-family: var(--font-ja);
+  font-size: 0.86rem;
+  color: var(--muted);
+  margin-top: 0.6rem;
+}
+
+.skillgroup .taglist { margin-top: 1rem; }
+
+.skilllist { margin-top: 0.5rem; }
+
+.skilllist__item {
+  display: grid;
+  gap: 0.2rem 1.5rem;
+  padding-block: 0.85rem;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+
+@media (min-width: 760px) {
+  .skilllist__item { grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.4fr); }
+}
+
+.skilllist__item b {
+  font-family: var(--font-ja);
+  font-weight: 700;
+  font-size: 0.98rem;
+}
+
+.skilllist__item span {
+  font-family: var(--font-ja);
+  font-size: 0.85rem;
+  line-height: 1.8;
+  color: var(--soft);
+}
+
+/* ---------------- 「ラベル / 値」の表 ---------------- */
+.facts {
+  margin-top: 1.1rem;
+  border-top: 1px solid var(--line);
+}
+
+.facts__row {
+  display: grid;
+  gap: 0.2rem 1.5rem;
+  padding-block: 0.75rem;
+  border-bottom: 1px solid var(--line);
+  align-items: baseline;
+}
+
+@media (min-width: 700px) {
+  .facts__row { grid-template-columns: 11rem minmax(0, 1fr); }
+}
+
+.facts__row dt { color: var(--muted); }
+
+.facts__row dd {
+  margin: 0;
+  font-family: var(--font-ja);
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--soft);
+}

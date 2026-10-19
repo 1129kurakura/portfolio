@@ -31,7 +31,7 @@
   --text-body: clamp(0.95rem, 0.9rem + 0.25vw, 1.075rem);
   --text-lede: clamp(1.05rem, 0.95rem + 0.55vw, 1.45rem);
   --text-section: clamp(2.6rem, 1.2rem + 6.4vw, 8rem);
-  --text-hero: clamp(3rem, 0.4rem + 11.4vw, 12.5rem);
+  --text-hero: clamp(2.6rem, 0.5rem + 8.6vw, 9rem);
   --text-row: clamp(1.45rem, 1.1rem + 1.3vw, 2.3rem);
   --text-strip: clamp(4rem, 1rem + 14vw, 16rem);
 

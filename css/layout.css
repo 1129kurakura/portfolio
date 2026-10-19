@@ -47,6 +47,10 @@ body.is-locked .head-scrim { opacity: 0; }
 .site-head.is-hidden { transform: translateY(-110%); }
 
 .brand {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding-inline: 0.15rem;
   font-size: clamp(1rem, 0.85rem + 0.7vw, 1.4rem);
   font-weight: 600;
   letter-spacing: -0.03em;
@@ -94,15 +98,6 @@ body.is-locked .head-scrim { opacity: 0; }
 }
 
 /* --- セクション共通 --- */
-.hero,
-.statement,
-.affil,
-.works,
-.profile,
-.contact,
-.strip { position: relative; }
-
-.statement { padding-block: var(--space-section); }
 
 /* 面が切り替わる境目は、グラデーションの帯でつないで段差を消す。
    帯の色は --paper(#f1efea) と --ink(#0a0a0a) の中間色を手で並べたもの。
@@ -162,12 +157,6 @@ section[data-seam] { padding-top: calc(var(--seam-h) + var(--space-block) * 0.75
   color: var(--on-surface);
 }
 
-.affil { padding-block: var(--space-section) clamp(2.5rem, 5vw, 5rem); }
-.works { padding-block: clamp(3.5rem, 6vw, 7rem); }
-.profile { padding-block: clamp(3.5rem, 6vw, 7rem); }
-.contact { padding-block: var(--space-section); }
-
-
 
 /* --- フッター --- */
 .site-foot {
@@ -184,6 +173,9 @@ section[data-seam] { padding-top: calc(var(--seam-h) + var(--space-block) * 0.75
 }
 
 .to-top {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   color: var(--on-surface);
   transition: color var(--dur-fast) linear;
 }

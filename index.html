@@ -3,10 +3,14 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>KURA' | Kuranosuke Shiga</title>
-<meta name="description" content="志賀蔵之介（Kuranosuke Shiga）のポートフォリオ。電気通信大学 情報理工学域 II類（融合系）。U.E.C.wings 28代代表、学生団体 u&me 代表、UEC Fencers Club 代表ほか。" />
+<title>KURA' | 志賀 蔵之介のポートフォリオ</title>
+<meta name="description" content="志賀蔵之介（Kuranosuke Shiga）のポートフォリオ。電気通信大学 情報理工学域 Ⅱ類（融合系）。U.E.C.wings 28代代表、学生団体 u&me 代表、UEC Fencers Club 代表ほか。活動・プロジェクト・技術を、目的別の3つの見方で紹介しています。" />
 <meta name="author" content="Kuranosuke Shiga" />
 <meta name="theme-color" content="#0b0b0b" />
+
+<!-- JS が動く環境でだけ「出現前は隠す」スタイルを有効にする。
+     JS が失敗しても文字や画像が消えないようにするための保険。 -->
+<script>document.documentElement.classList.add("js");</script>
 
 <!-- SNS シェア用の設定。
      og:url / og:image / twitter:image は「絶対URL」でないとクローラーが読めません。
@@ -16,8 +20,8 @@
 <meta property="og:site_name" content="KURA'" />
 <meta property="og:locale" content="ja_JP" />
 <meta property="og:url" content="https://1129kurakura.github.io/portfolio/" />
-<meta property="og:title" content="KURA' | Kuranosuke Shiga" />
-<meta property="og:description" content="志賀蔵之介のポートフォリオ。所属と役職、活動の記録。" />
+<meta property="og:title" content="KURA' | 志賀 蔵之介のポートフォリオ" />
+<meta property="og:description" content="電気通信大学の学生。複数の学生団体で代表を務めながら、Web・3D・生成AI を使ったプロダクト開発に取り組んでいます。" />
 <meta property="og:image" content="https://1129kurakura.github.io/portfolio/assets/images/og.jpg" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
@@ -29,21 +33,19 @@
 <link rel="icon" href="assets/images/favicon.svg" type="image/svg+xml" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" />
-
-<!-- JS が動く環境でだけ「出現前は隠す」スタイルを有効にする。
-     JS が失敗しても文字や画像が消えないようにするための保険。 -->
-<script>document.documentElement.classList.add("js");</script>
 
 <link rel="stylesheet" href="css/tokens.css" />
 <link rel="stylesheet" href="css/base.css" />
 <link rel="stylesheet" href="css/layout.css" />
 <link rel="stylesheet" href="css/components.css" />
 <link rel="stylesheet" href="css/sections.css" />
+<link rel="stylesheet" href="css/views.css" />
 </head>
 
 <body>
+<a class="skip-link" href="#viewRoot">本文へスキップ</a>
+
 <!-- ============ LOADER ============ -->
 <div class="loader" id="loader" aria-hidden="true">
   <div class="loader__mark"><span class="loader__word">KURA</span><span class="loader__tick">'</span></div>
@@ -51,20 +53,16 @@
   <div class="loader__bar"><i id="loaderBar"></i></div>
 </div>
 
-<!-- ============ CURSOR ============ -->
 <div class="progress" aria-hidden="true"><i id="progressBar"></i></div>
 <div class="cursor" id="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"></span></div>
-<div class="hover-media" id="hoverMedia" aria-hidden="true"></div>
 
 <!-- ============ HEADER ============ -->
 <header class="site-head" id="siteHead">
   <a class="brand" href="#top" data-cursor="link"><span class="brand__word">KURA</span><span class="brand__tick">'</span></a>
-  <nav class="site-nav" aria-label="メインナビゲーション">
-    <a href="#affiliations" data-cursor="link">AFFILIATIONS</a>
-    <a href="#works" data-cursor="link">WORKS</a>
-    <a href="#profile" data-cursor="link">PROFILE</a>
-    <a href="#contact" data-cursor="link">CONTACT</a>
-  </nav>
+
+  <!-- 閲覧モードの切り替え。タブとして読み上げられます。 -->
+  <div class="switch" id="viewSwitch" role="tablist" aria-label="閲覧モードの切り替え"></div>
+
   <button class="menu-btn" id="menuBtn" type="button" aria-expanded="false" aria-controls="menuPanel" data-cursor="link">
     <span class="menu-btn__label" data-open="MENU" data-close="CLOSE">MENU</span>
     <span class="menu-btn__lines" aria-hidden="true"><i></i><i></i></span>
@@ -77,6 +75,10 @@
 
 <!-- ============ FULLSCREEN MENU ============ -->
 <div class="menu" id="menuPanel" role="dialog" aria-modal="true" aria-label="メニュー" hidden>
+  <div class="menu__views">
+    <p class="mono-label menu__viewslabel">閲覧モード</p>
+    <div class="switch switch--stack" id="viewSwitchMobile" role="tablist" aria-label="閲覧モードの切り替え（メニュー内）"></div>
+  </div>
   <nav class="menu__list" id="menuList" aria-label="セクション"></nav>
   <div class="menu__foot">
     <p class="mono-label">GET IN TOUCH</p>
@@ -84,103 +86,11 @@
   </div>
 </div>
 
-<main id="top">
-  <!-- ============ HERO ============ -->
-  <section class="hero surface-paper" aria-labelledby="hero-heading">
-    <div class="shell hero__inner">
-      <p class="mono-label hero__eyebrow rise" id="heroEyebrow"></p>
-      <h1 class="hero__title" id="hero-heading" data-split="words"></h1>
-      <div class="hero__meta" id="heroMeta"></div>
-    </div>
-    <div class="hero__foot shell">
-      <a class="scroll-cue" href="#statement" data-cursor="link">
-        <span class="mono-label">SCROLL</span>
-        <span class="scroll-cue__line" aria-hidden="true"></span>
-      </a>
-      <p class="mono-label hero__year" id="heroYear"></p>
-    </div>
-    <div class="ticker" aria-hidden="true"><div class="ticker__track" id="heroTicker"></div></div>
-  </section>
+<!-- モード切り替えを読み上げに伝えるための領域 -->
+<p class="sr-only" id="viewAnnouncer" role="status" aria-live="polite"></p>
 
-  <!-- ============ STATEMENT ============ -->
-  <section class="statement surface-paper" id="statement" aria-labelledby="statement-heading">
-    <div class="shell">
-      <p class="mono-label section-tag">( 01 ) &nbsp;STATEMENT</p>
-      <h2 class="statement__text" id="statement-heading" data-split="words"></h2>
-      <p class="statement__ja" id="statementJa"></p>
-    </div>
-  </section>
-
-  <!-- ============ AFFILIATIONS ============ -->
-  <section class="affil surface-paper" id="affiliations" aria-labelledby="affil-heading">
-    <div class="shell">
-      <div class="affil__head">
-        <h2 class="section-title rise" id="affil-heading">AFFILIATIONS<br /><span>&amp; ROLES</span></h2>
-        <div class="affil__intro">
-          <p class="mono-label section-tag">( 02 ) &nbsp;<span id="affilCount"></span></p>
-          <p class="lede" id="affilLede"></p>
-        </div>
-      </div>
-
-      <!-- 所属・役職・種別を 1 つの表にまとめる -->
-      <div class="affil__tablehead mono-label" aria-hidden="true">
-        <span>No.</span>
-        <span>ORGANIZATION / 所属</span>
-        <span>ROLE / 役職</span>
-        <span>TYPE / 種別</span>
-      </div>
-      <ol class="affil__list" id="affilList"></ol>
-    </div>
-  </section>
-
-  <!-- ============ WORKS ============ -->
-  <section class="works surface-ink" data-seam="from-paper" id="works" aria-labelledby="works-heading">
-    <div class="shell">
-      <div class="works__head">
-        <h2 class="section-title rise" id="works-heading">WORKS<br /><span>&amp; PROJECTS</span></h2>
-        <div class="works__intro">
-          <p class="mono-label section-tag">( 03 ) &nbsp;<span id="worksCount"></span></p>
-          <p class="lede" id="worksLede"></p>
-        </div>
-      </div>
-      <div class="works__groups" id="worksGroups"></div>
-    </div>
-  </section>
-
-  <!-- ============ PROFILE ============ -->
-  <section class="profile surface-paper" data-seam="from-ink" id="profile" aria-labelledby="profile-heading">
-    <div class="shell profile__grid">
-      <figure class="profile__media rise">
-        <div class="media" data-media="portrait" id="portrait"></div>
-        <figcaption class="mono-label" id="portraitCaption"></figcaption>
-      </figure>
-      <div class="profile__body">
-        <p class="mono-label section-tag">( 04 ) &nbsp;PROFILE</p>
-        <h2 class="section-title section-title--sm" id="profile-heading"></h2>
-        <div class="profile__text" id="profileText"></div>
-      </div>
-    </div>
-    <div class="shell">
-      <div class="focus" id="focusBlock"></div>
-    </div>
-  </section>
-
-  <!-- ============ GLITCH MARQUEE ============ -->
-  <section class="strip surface-ink" data-seam="from-paper" aria-hidden="true">
-    <div class="strip__row"><div class="strip__track" id="stripA"></div></div>
-    <div class="strip__row strip__row--rev"><div class="strip__track" id="stripB"></div></div>
-  </section>
-
-  <!-- ============ CONTACT ============ -->
-  <section class="contact surface-ink" id="contact" aria-labelledby="contact-heading">
-    <div class="shell">
-      <p class="mono-label section-tag">( 05 ) &nbsp;CONTACT</p>
-      <h2 class="contact__title" id="contact-heading" data-split="words"></h2>
-      <div class="contact__actions" id="contactActions"></div>
-      <div class="contact__links" id="contactLinks"></div>
-    </div>
-  </section>
-</main>
+<!-- ============ 本文（モードごとに差し替わる） ============ -->
+<main id="viewRoot" role="tabpanel" tabindex="-1" aria-labelledby="tab-about"></main>
 
 <footer class="site-foot surface-ink">
   <div class="shell site-foot__inner">
@@ -192,21 +102,42 @@
 
 <noscript>
   <div class="noscript">
-    <h2>志賀 蔵之介 / Kuranosuke Shiga</h2>
+    <h1>志賀 蔵之介 / Kuranosuke Shiga</h1>
     <p>電気通信大学 情報理工学域 Ⅱ類（融合系）</p>
+    <h2>所属と役職</h2>
     <ul>
-      <li>U.E.C.wings — 28代 代表 兼 駆動班 班長</li>
+      <li>U.E.C.wings（鳥人間サークル） — 28代 代表 兼 駆動班 班長</li>
       <li>学生団体 u&amp;me — 代表</li>
       <li>UEC Fencers Club — 代表</li>
-      <li>ICES（留学生国際交流会サークル） — メンバー</li>
-      <li>アメリカンフットボール部 Crushers — アナライジングスタッフ</li>
+      <li>kindchord — PDM</li>
+      <li>ICES（留学生国際交流会サークル） — 企画運営</li>
+      <li>アメリカンフットボール部 CRUSHERS — アナライジングスタッフ</li>
     </ul>
-    <p>Mail: kuranosukeshiga1129[@]gmail.com / X: @kuranosukeshiga / Instagram: @kuranosukeshiga</p>
+    <h2>プロジェクト</h2>
+    <ul>
+      <li>ふらっと（学生団体 u&amp;me） — 実証段階に向けて準備中</li>
+      <li>SAKIMO（kindchord） — 実証段階に向けて準備中</li>
+      <li>都市3Dマップ（学生団体 u&amp;me） — 開発中</li>
+      <li>ゆめリス（学生団体 u&amp;me） — 実証段階に向けて準備中</li>
+      <li>U.E.C.wings 公式サイトのリニューアル — 公開中</li>
+      <li>人力飛行機のフライトシミュレーター（Unity）</li>
+      <li>機体三面図を自動で3D再現するシミュレーター（生成AI / Blender）</li>
+    </ul>
+    <h2>連絡先</h2>
+    <p>
+      メール: <a href="mailto:kuranosukeshiga1129@gmail.com">kuranosukeshiga1129@gmail.com</a><br />
+      X: <a href="https://x.com/kuranosukeshiga">@kuranosukeshiga</a><br />
+      Instagram: <a href="https://www.instagram.com/kuranosukeshiga/">@kuranosukeshiga</a>
+    </p>
+    <p>※ このページの全機能を使うには JavaScript を有効にしてください。</p>
   </div>
 </noscript>
 
 <script src="js/data.js"></script>
-<script src="js/render.js"></script>
+<script src="js/copy.js"></script>
+<script src="js/parts.js"></script>
+<script src="js/views.js"></script>
+<script src="js/router.js"></script>
 <script src="js/motion.js"></script>
 <script src="js/ui.js"></script>
 <script src="js/main.js"></script>

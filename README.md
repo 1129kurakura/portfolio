@@ -3,213 +3,188 @@
 志賀 蔵之介（Kuranosuke Shiga）のポートフォリオサイト。
 HTML / CSS / JavaScript のみで作られており、ビルド不要でそのまま公開できます。
 
-参考デザイン：[noth.in](https://www.noth.in/) — 黒×白の巨大タイポグラフィ、
-語単位のリビール、ローダーカウンター、横に流れる帯という構成を踏襲しています。
+**同じ内容を、読む人に合わせて 3 通りの見せ方に切り替えられます。**
+
+| モード | URL | 想定する読み手 |
+|---|---|---|
+| ABOUT ME（初期表示） | `/portfolio/` | はじめて訪れた人、友人、大学関係者 |
+| COLLABORATE | `/portfolio/?view=collaborate` | 一緒にプロジェクトをやりたい人 |
+| CAREER | `/portfolio/?view=career` | 採用担当の方、企業のエンジニア |
+
+URL をそのまま共有すれば、相手はそのモードで開きます。
+ブラウザの戻る / 進むにも対応していて、切り替えでページは再読み込みされません。
 
 ---
 
 ## 1. 内容の変更方法
 
-**文章・リンク・画像パスは、すべて [`js/data.js`](js/data.js) の 1 ファイルにまとまっています。**
-HTML や CSS を触らずに、ここだけを書き換えれば内容が更新されます。
+編集するファイルは 2 つだけです。
 
-```js
-const SITE_DATA = {
-  meta: { ... },          // 名前・年・拠点
-  hero: { ... },          // トップの大見出し、下部を流れる帯
-  statement: { ... },     // スクロールで浮かび上がる文章
-  affiliations: { ... },  // ★所属と役職
-  works: { ... },         // ★手がけたプロジェクト
-  profile: { ... },       // プロフィール文・肩書一覧・FOCUS
-  strip: { ... },         // 流れる大きな文字
-  contact: { ... },       // 連絡先（メール・X・Instagram）
-  menu: [ ... ],          // メニュー項目
-  footer: { ... },        // コピーライト
-};
-```
+| ファイル | 役割 |
+|---|---|
+| [`js/data.js`](js/data.js) | **事実**（団体名・役職・プロジェクトの中身・連絡先） |
+| [`js/copy.js`](js/copy.js) | **見せ方**（モードごとの言い回し、モード専用のセクション） |
 
-### 所属・役職を追加する
+この 2 つを分けているのは、**同じプロジェクトを 3 モードで重複管理しないため**です。
+プロジェクトの事実は data.js に 1 回だけ書き、
+「一般向けにはこう、採用向けにはこう」を copy.js で足します。
+両者は `id`（`furatto` や `wings` など）で結びついています。
 
-`affiliations.items` に 1 つオブジェクトを足すだけです。番号（01, 02 …）と
-一覧表は自動で作られます。
+### プロジェクトを追加する
+
+**① `js/data.js` の `works.items` に事実を書く**
 
 ```js
 {
-  org: "団体名",                       // 大きく表示される名前
-  orgEn: "English Name",              // 小さく併記される英語名
-  roleLabel: "ROLE / 役職",            // 省略可（学域などに変えたいとき）
-  role: "代表",                        // ★役職（太字で表示）
-  roleEn: "Representative",           // 役職の英語表記
-  kind: "学生団体 / STUDENT ORG",      // 種別ラベル
-  period: "現在",                      // 期間
-  lead: true,                         // true にすると「代表 / LEAD」バッジが付く
-  summary: "説明文。",
-  tags: ["代表", "企画運営"],
-  image: "assets/images/xxx.jpg",     // 空欄可（ホバー時に出る画像）
-  link: "https://example.com",        // 空欄可
-}
-```
-
-### プロジェクト（WORKS）を追加する
-
-`works.items` に追加します。**テンプレートが 3 件入っているので、
-書き換えて使ってください。**`data.js` の works の中には、
-コピーして貼るための空テンプレートもコメントで用意してあります。
-
-```js
-{
-  featured: true,                      // true にすると横幅いっぱいの大きな表示
+  id: "new-project",          // ★ copy.js と結びつけるための名前（半角英数）
+  featured: false,            // true にすると ABOUT の代表作に出る
   title: "プロジェクト名",
-  subtitle: "一言説明",
-  year: "2026",
-  category: "WEB / SITE",              // 種別ラベル（自由）
-  role: "企画・デザイン・実装",          // ★このプロジェクトでの担当
+  subtitle: "どこの活動か",
+  year: "2026.Oct - Now",     // "Now"/"現在" を含むと「進行中」扱い
+  category: "SERVICE",
+  role: "担当",
   summary: "説明文。",
-  tags: ["HTML", "CSS", "JavaScript"],
-  image: "assets/images/work-01.jpg",  // 空欄可
-  links: [                             // ★詳細ページへのリンク（何個でも）
-    { label: "詳しく見る", href: "https://...", primary: true },
-    { label: "GitHub",   href: "https://..." },
-  ],
+  tags: ["タグ"],
+  image: "assets/images/xxx.png",
+  links: [{ label: "詳しく見る", href: "https://...", primary: true }],
 }
 ```
 
-- `links` は何個でも足せます。`primary: true` を付けたものが、
-  オレンジの枠のボタン風に目立って表示されます
-- `links: []` にすればリンク欄ごと消えます
-- `featured: true` は 1〜2 件だけにすると、強弱がついて見栄えがします
-- `works.items` を空 `[]` にすると、WORKS セクション自体が非表示になります
+**② `js/copy.js` の `projects` に、対象者別の見せ方を足す（任意）**
 
-#### 並び方（自動）
+```js
+"new-project": {
+  collaborate: {
+    stage: "開発中",                    // 進み具合
+    goal: "何を実現したいか",
+    wanted: ["一緒にできそうなこと"],
+  },
+  career: {
+    overview: "概要",
+    problem: "課題",
+    myRole: "担当範囲",
+    status: "現在の状況",
+    stack: ["使った技術"],
+    challenges: "", results: "", next: "",   // 空欄は表示されません
+  },
+},
+```
 
-WORKS は **「現在（NOW）」と「過去（ARCHIVE）」に自動で分かれ、それぞれ古い順**に並びます。
-`items` に書く順番は気にしなくて大丈夫です。
+copy.js に何も書かなければ、data.js の `summary` がそのまま使われます。
 
-| `year` の書き方 | 分類 | 並びの基準 |
-|---|---|---|
-| `"2026.Sep - Now"` | 現在 | 2026年9月 |
-| `"2026.May - 現在"` | 現在 | 2026年5月 |
-| `"2026.Apr"` | 過去 | 2026年4月 |
-| `"2026年7月"` / `"2026.07"` | 過去 | 2026年7月 |
+**③ CAREER のケーススタディに載せたい場合**
 
-- `Now` か `現在` が入っていれば「現在」、無ければ「過去」
-- 同じ年月のものは `items` に書いた順
-- 自動判定と違う分類にしたいときは `status: "current"` か `status: "past"` を書く
-- 年月が読めない `year`（`"NEXT"` など）は、そのグループの最後に並ぶ
-- 見出しの文字は `works.groups` で変えられます
-- 2列で右隣が空いてしまうカードは、自動で横幅いっぱいの表示になります
+`js/copy.js` の `career.selectedIds` に id を足してください。
+ここに書いた順に並びます。書かれていないものは EXPERIENCE に短くまとまります。
+
+### 所属団体を追加する
+
+`js/data.js` の `affiliations.items` に `id` 付きで追加し、
+必要なら `js/copy.js` の `activities` に一般向け / 採用向けの一言を足します。
+
+### モードごとのセクションを変える
+
+`js/copy.js` の `views.<モード>.sections` が、そのモードに出すセクションと順番です。
+
+```js
+about: {
+  sections: ["about", "activities", "interests", "works", "journey", "contact"],
+},
+```
+
+並べ替えると表示順が変わります。使える名前は `js/views.js` の `BUILDERS` にあります。
 
 ### 画像を差し替える
 
 1. 画像を `assets/images/` に置く
-2. `data.js` の該当する `image:` / `portrait:` にパスを書く（例 `"assets/images/portrait.jpg"`）
+2. `data.js` の `image:` / `portrait:` にパスを書く
 
-パスが空の場合は「NO IMAGE」のプレースホルダが自動表示されるので、
-画像が無い状態でも崩れません。
+パスが空の場合はプレースホルダが出るので、画像が無くても崩れません。
 
-推奨サイズ：
-| 用途 | ファイル | 推奨 |
-|------|----------|------|
-| プロフィール写真 | `portrait.jpg` | 1200 × 1500 (4:5) |
-| 所属ホバー画像 | 任意 | 800 × 1000 (4:5) |
-| WORKS の画像 | 任意 | 1600 × 1200 (4:3) |
-| SNS シェア画像 | `og.jpg` | 1200 × 630 |
+| 用途 | 推奨サイズ |
+|---|---|
+| プロフィール写真 | 1200 × 1600（3:4） |
+| プロジェクト画像 | 1600 × 1000（16:10） |
+| SNS シェア画像 `og.jpg` | 1200 × 630 |
+
+プロフィール写真の切り取り位置は `data.js` の `portraitPosition` で調整できます
+（顔が上寄りなら `"center top"`、`"center 15%"` のような % 指定も可）。
 
 ### 色・文字サイズを変える
 
-[`css/tokens.css`](css/tokens.css) の CSS 変数を書き換えます。
+[`css/tokens.css`](css/tokens.css) の変数を書き換えます。
 
 ```css
---paper: #f1efea;   /* 明るい面の背景 */
---ink:   #0a0a0a;   /* 暗い面の背景 */
---accent:#ff3d14;   /* アクセント（代表バッジ・ホバー） */
+--paper: #f1efea;      /* 明るい面の背景 */
+--ink:   #0a0a0a;      /* 暗い面の背景 */
+--accent:#ff3d14;      /* アクセント */
+--accent-text:#c92f0d; /* 明るい面で小さい文字に使うアクセント */
 ```
+
+セクションの明暗は、`js/views.js` の各セクションの `surface: "paper" | "ink"` で決まります。
+白黒が切り替わる境目には、グラデーションの帯が自動で入ります。
 
 ---
 
 ## 2. ローカルで確認する
 
 ```bash
-python3 -m http.server 4185 --directory .
+npx serve -l 4185 /Users/kura/Documents/Coding/kura-portfolio
 ```
 
 ブラウザで <http://localhost:4185> を開きます。
-（`index.html` を直接ダブルクリックしても動きますが、サーバー経由を推奨）
 
 ---
 
-## 3. GitHub Pages で公開する
-
-```bash
-git init
-git add .
-git commit -m "feat: portfolio site"
-git branch -M main
-git remote add origin https://github.com/<ユーザー名>/<リポジトリ名>.git
-git push -u origin main
-```
-
-そのあと GitHub の **Settings → Pages** で
-
-- Source: `Deploy from a branch`
-- Branch: `main` / `/ (root)`
-
-を選んで保存すると、`https://<ユーザー名>.github.io/<リポジトリ名>/` で公開されます。
-
-> ユーザーサイト（`https://<ユーザー名>.github.io/`）にしたい場合は、
-> リポジトリ名を `<ユーザー名>.github.io` にしてください。
-
-`.nojekyll` を同梱しているので、Jekyll による変換は行われません。
-
----
-
-## 更新するとき（ダブルクリックだけ）
+## 3. 更新するとき（ダブルクリックだけ）
 
 Finder で **`サイトを更新.command`** をダブルクリックすると、ターミナルが開いて次の順に進みます。
 
 1. 変更されたファイルを一覧表示
 2. `js/` の書き間違いをチェック（**間違いがあれば送信しないので、サイトが壊れません**）
-3. 更新メモを入力して Enter（空のまま Enter なら日時入りのメモ）
-4. GitHub に送信（GitHub 側が先に進んでいたら自動で取り込んで送り直し）
+3. 更新メモを入力して Enter
+4. GitHub に送信
 5. 公開サイトに反映されるまで待ち、反映されたらブラウザで開く
 
-変更が何もなければ「変更はありません」と表示して終わります。
-
 - 初回だけ「"ターミナル"から"書類"フォルダ内のファイルにアクセスしようとしています」と出たら **許可** を押してください
-- メモに `feat:` `fix:` などが付いていなければ、自動で `chore:` が付きます
-- 5 分待っても反映を確認できない場合は、GitHub の Actions タブの URL を表示します
+- 公開後に表示が変わらないときは、ブラウザのキャッシュなので **Cmd + Shift + R**
+
+---
 
 ## 4. ファイル構成
 
 ```
 kura-portfolio/
-├── index.html          マークアップ（構造のみ。文章は data.js から）
+├── index.html           骨組み（ヘッダー・メニュー・本文の入れ物）
 ├── css/
-│   ├── tokens.css      色・文字サイズ・余白・動きの設定値
-│   ├── base.css        リセットと共通タイポグラフィ
-│   ├── layout.css      ヘッダー・全体骨格・フッター
-│   ├── components.css  ローダー / カーソル / メニュー / 帯 / ボタン
-│   └── sections.css    各セクションの見た目
+│   ├── tokens.css       色・文字サイズ・余白・動きの設定値
+│   ├── base.css         リセット、出現アニメーションの土台
+│   ├── layout.css       ヘッダー、面の切り替え、境目のグラデーション
+│   ├── components.css   ローダー / カーソル / メニュー / モード切替 / タグ / ボタン
+│   ├── sections.css     最初の画面、セクションの枠、連絡先
+│   └── views.css        各セクションの中身
 ├── js/
-│   ├── data.js         ★内容（ここを編集）
-│   ├── render.js       data.js を HTML に流し込む
-│   ├── motion.js       文字分割・スクロール演出
-│   ├── ui.js           ローダー・カーソル・メニュー・ホバー
-│   └── main.js         起動処理
-├── assets/images/      画像置き場
-├── サイトを更新.command  ダブルクリックで公開サイトを更新
-└── .nojekyll           GitHub Pages 用
+│   ├── data.js          ★事実（団体・プロジェクト・連絡先）
+│   ├── copy.js          ★見せ方（モード別の言い回しとセクション）
+│   ├── parts.js         画面を組み立てる共通部品
+│   ├── views.js         3モードの組み立て
+│   ├── router.js        モード切り替え（URL・履歴・キーボード）
+│   ├── motion.js        スクロール連動の動き
+│   ├── ui.js            ローダー・カーソル・メニュー
+│   └── main.js          起動処理
+├── assets/images/       画像置き場
+├── サイトを更新.command   ダブルクリックで公開
+└── .nojekyll            GitHub Pages 用
 ```
 
 ---
 
 ## 5. 仕様メモ
 
-- 外部ライブラリなし（欧文フォントのみ Google Fonts：Inter Tight / IBM Plex Mono）
-- 和文は **Meiryo UI**（Windows 標準フォント）を指定。インストールされていない環境では
-  Meiryo → Hiragino Sans（Mac）→ Yu Gothic UI → Noto Sans JP の順に自動で代替されます。
-  変更するときは `css/tokens.css` の `--font-ja` を書き換えてください
-- `prefers-reduced-motion` に対応（動きを減らす設定の端末ではアニメーションを停止）
-- キーボード操作対応（Tab でフォーカス、Esc でメニューを閉じる）
-- JavaScript 無効時は `<noscript>` に基本情報を表示
-- 横スクロールが発生しないことを 320 / 768 / 1440px で確認済み
+- 外部ライブラリなし。ビルド工程なし。欧文フォントのみ Google Fonts（Inter Tight / IBM Plex Mono）
+- 和文は **Meiryo UI**（Windows 標準）。無い環境では Meiryo → Hiragino Sans（Mac）→ Yu Gothic UI → Noto Sans JP の順で代替
+- モード切り替えはタブとして読み上げられ、**矢印キー・Home・End** で操作できます。切り替えは読み上げにも通知されます
+- `prefers-reduced-motion` に対応（動きを減らす設定では視差と出現演出を止めます）
+- JavaScript が無効でも、`<noscript>` に所属・プロジェクト・連絡先の要点を表示します
+- 相対パスのみを使用しているため、GitHub Pages のサブパス（`/portfolio/`）でそのまま動きます
+- タップ領域は 44px 以上。320 / 375 / 768 / 1280 / 1440px で横スクロールが出ないことを確認済み

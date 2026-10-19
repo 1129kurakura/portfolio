@@ -1,152 +1,147 @@
+/* ============================================================
+   motion.js — スクロールに連動する動き
+
+   モードを切り替えると本文が作り直されるため、
+   描画のたびに M.scan() を呼んで対象を集め直します。
+   ============================================================ */
+
 const M = (() => {
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   const STAGGER = 55;
+  const REVEAL_LINE = 0.94; // 画面高さのこの位置まで来たら出す
+  const PARALLAX_SHIFT = 16;
+
+  let pending = [];        // まだ表示されていない要素
+  let parallaxNodes = [];
+  let heroHeld = true;     // ローダーが明けるまで、最初の画面は出さずに待つ
+
+  /* ---------------- 文字を単語に分ける ---------------- */
   const splitWords = (root = document) => {
     root.querySelectorAll('[data-split="words"]').forEach((node) => {
-      const lines = node.querySelectorAll(".line");
-      let index = 0;
-      lines.forEach((line) => {
+      if (node.dataset.splitDone === "true") return;
+      node.dataset.splitDone = "true";
+      node.querySelectorAll(".line").forEach((line) => {
         const words = line.textContent.trim().split(/\s+/);
         line.textContent = "";
-        words.forEach((w) => {
+        words.forEach((word, i) => {
           const span = document.createElement("span");
           span.className = "word";
-          span.style.setProperty("--d", `${index * STAGGER}ms`);
+          span.style.setProperty("--d", `${i * STAGGER}ms`);
           const inner = document.createElement("i");
-          inner.textContent = w;
+          inner.textContent = word;
           span.appendChild(inner);
           line.appendChild(span);
           line.appendChild(document.createTextNode(" "));
-          index += 1;
         });
       });
     });
   };
-  /** 画面に入った（または通り過ぎた）要素を表示する。
-      IntersectionObserver だと素早いスクロールで取りこぼし、
-      要素が出ないまま残ることがあるため、位置を直接見て判定する。 */
-  const REVEAL_LINE = 0.94; // 画面高さのこの位置まで来たら出す
-  const observeReveals = () => {
-    const targets = [
-      ...document.querySelectorAll('[data-split="words"], .rise'),
-    ].filter((node) => !node.closest(".hero"));
-    if (reduced) {
-      targets.forEach((t) => t.classList.add("is-revealed"));
-      return;
-    }
-    targets.forEach((t, i) => {
-      if (!t.style.getPropertyValue("--d")) {
-        t.style.setProperty("--d", `${(i % 6) * 45}ms`);
+
+  /* ---------------- 表示の対象を集め直す ---------------- */
+  const collect = () => {
+    const all = [...document.querySelectorAll('[data-split="words"], .rise')];
+    pending = all.filter((node) => {
+      if (node.classList.contains("is-revealed")) return false;
+      if (heroHeld && node.closest(".hero")) return false;
+      return true;
+    });
+    pending.forEach((node, i) => {
+      if (!node.style.getPropertyValue("--d")) {
+        node.style.setProperty("--d", `${(i % 6) * 45}ms`);
       }
     });
-    let pending = targets;
-    const check = () => {
-      if (!pending.length) return;
-      const line = window.innerHeight * REVEAL_LINE;
-      const still = [];
-      pending.forEach((node) => {
-        if (node.getBoundingClientRect().top < line) {
-          node.classList.add("is-revealed");
-        } else {
-          still.push(node);
-        }
-      });
-      pending = still;
-    };
-    onScroll(check);
-    check();
+    parallaxNodes = [...document.querySelectorAll("[data-parallax]")];
   };
-  const litStatement = () => {
-    const section = document.querySelector(".statement");
-    const words = [...document.querySelectorAll(".statement__text .word")];
-    if (!section || !words.length) return;
+
+  /**
+   * 画面に入った（または通り過ぎた）要素を表示する。
+   * IntersectionObserver だと素早いスクロールで取りこぼし、
+   * 要素が出ないまま残ることがあるため、位置を直接見て判定する。
+   */
+  const checkReveals = () => {
+    if (!pending.length) return;
     if (reduced) {
-      words.forEach((w) => w.classList.add("is-lit"));
+      pending.forEach((node) => node.classList.add("is-revealed"));
+      pending = [];
       return;
     }
-    const update = () => {
-      const rect = section.getBoundingClientRect();
-      const vh = window.innerHeight;
-      const start = vh * 0.85;
-      const end = vh * 0.15;
-      const progress = (start - rect.top) / (start - end + rect.height * 0.55);
-      const lit = Math.round(Math.min(Math.max(progress, 0), 1) * words.length);
-      words.forEach((w, i) => w.classList.toggle("is-lit", i < lit));
-    };
-    onScroll(update);
-    update();
+    const line = window.innerHeight * REVEAL_LINE;
+    const still = [];
+    pending.forEach((node) => {
+      if (node.getBoundingClientRect().top < line) node.classList.add("is-revealed");
+      else still.push(node);
+    });
+    pending = still;
   };
-  /** 画面上端のスクロール進捗バー */
-  const scrollProgress = () => {
-    const bar = document.getElementById("progressBar");
-    if (!bar) return;
-    const update = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      const ratio = max > 0 ? window.scrollY / max : 0;
-      bar.style.setProperty("--p", Math.min(Math.max(ratio, 0), 1).toFixed(4));
-    };
-    onScroll(update);
-    update();
-  };
-  /** 画像をスクロールに合わせてゆっくり上下に動かす（視差） */
-  const PARALLAX_SHIFT = 16;
-  const parallax = () => {
-    if (reduced) return;
-    const nodes = [...document.querySelectorAll("[data-parallax]")];
-    if (!nodes.length) return;
-    const update = () => {
-      const vh = window.innerHeight;
-      nodes.forEach((node) => {
-        const rect = node.getBoundingClientRect();
-        if (rect.bottom < -200 || rect.top > vh + 200) return;
-        const center = rect.top + rect.height / 2;
-        const offset = (center - vh / 2) / vh;
-        const clamped = Math.min(Math.max(offset, -1), 1);
-        node.style.setProperty("--py", `${(clamped * -PARALLAX_SHIFT).toFixed(1)}px`);
-      });
-    };
-    onScroll(update);
-    update();
-  };
-  const stickyHeader = () => {
-    const head = document.getElementById("siteHead");
-    if (!head) return;
-    let last = window.scrollY;
-    onScroll(() => {
-      const y = window.scrollY;
-      const goingDown = y > last && y > window.innerHeight * 0.6;
-      head.classList.toggle("is-hidden", goingDown && !head.dataset.pinned);
-      last = y;
+
+  /* ---------------- 画像の視差 ---------------- */
+  const updateParallax = () => {
+    if (reduced || !parallaxNodes.length) return;
+    const vh = window.innerHeight;
+    parallaxNodes.forEach((node) => {
+      const rect = node.getBoundingClientRect();
+      if (rect.bottom < -200 || rect.top > vh + 200) return;
+      const center = rect.top + rect.height / 2;
+      const offset = Math.min(Math.max((center - vh / 2) / vh, -1), 1);
+      node.style.setProperty("--py", `${(offset * -PARALLAX_SHIFT).toFixed(1)}px`);
     });
   };
-  const handlers = [];
+
+  /* ---------------- 画面上端の進捗バー ---------------- */
+  const updateProgress = () => {
+    const bar = document.getElementById("progressBar");
+    if (!bar) return;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = max > 0 ? window.scrollY / max : 0;
+    bar.style.setProperty("--p", Math.min(Math.max(ratio, 0), 1).toFixed(4));
+  };
+
+  /* ---------------- スクロール方向でヘッダーを出し入れ ---------------- */
+  let lastY = 0;
+  const updateHeader = () => {
+    const head = document.getElementById("siteHead");
+    if (!head) return;
+    const y = window.scrollY;
+    const goingDown = y > lastY && y > window.innerHeight * 0.6;
+    head.classList.toggle("is-hidden", goingDown);
+    lastY = y;
+  };
+
+  /* ---------------- スクロール処理をまとめて回す ---------------- */
   let ticking = false;
   const runAll = () => {
-    handlers.forEach((fn) => fn());
+    checkReveals();
+    updateParallax();
+    updateProgress();
+    updateHeader();
     ticking = false;
   };
-  const onScroll = (fn) => {
-    handlers.push(fn);
-    if (handlers.length === 1) {
-      window.addEventListener(
-        "scroll",
-        () => {
-          if (ticking) return;
-          ticking = true;
-          requestAnimationFrame(runAll);
-        },
-        { passive: true }
-      );
-      window.addEventListener("resize", runAll, { passive: true });
-    }
+
+  const onScroll = () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(runAll);
   };
-  const init = () => {
+
+  /** 本文を描き直したあとに呼ぶ */
+  const scan = () => {
     splitWords();
-    observeReveals();
-    litStatement();
-    stickyHeader();
-    scrollProgress();
-    parallax();
+    collect();
+    runAll();
   };
-  return { init, reduced };
+
+  /** ローダーが明けたら、最初の画面を表示する */
+  const releaseHero = () => {
+    heroHeld = false;
+    scan();
+  };
+
+  const init = () => {
+    lastY = window.scrollY;
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    scan();
+  };
+
+  return { init, scan, releaseHero, reduced };
 })();
